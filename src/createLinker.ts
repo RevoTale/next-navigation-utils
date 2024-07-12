@@ -2,10 +2,11 @@ import getLinkQueryValue from "./link/getLinkQueryValue"
 import setLinkQueryValue from "./link/setLinkQueryValue"
 import {ParameterOptions} from "./types"
 
-const createLinker = (link: string): {
+export type Linker = {
     setValue: <T>(opt: ParameterOptions<T>, value: T) => void,
     getValue: <T>(opt: ParameterOptions<T>) => void
-} => {
+}
+const createLinker = (link: string): Linker => {
 
     return {
         setValue: (opt, value) => {

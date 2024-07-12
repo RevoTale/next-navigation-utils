@@ -1,16 +1,15 @@
 'use client'
-import {usePathname, useSearchParams} from "next/navigation"
 import setLinkQueryValue from "../link/setLinkQueryValue"
 import {ParameterOptions} from "../types"
+import useCurrentLink from "./useCurrentLink";
 
 const useLinker = () => {
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
+    const link = useCurrentLink()
     return <T>(
         parameterOptions: ParameterOptions<T>,
         parameterValue: T
     ) => {
-        return setLinkQueryValue(`${pathname}?${searchParams.toString()}`, parameterOptions, parameterValue)
+        return setLinkQueryValue(link, parameterOptions, parameterValue)
     }
 }
 

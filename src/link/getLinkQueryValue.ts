@@ -9,4 +9,5 @@ const getLinkQueryValue = <T>(
 	const url = new URL(currentUrl, 'https://example.com')
 	return decode(parse(url.searchParams.toString())[name]??null)
 }
+
 export default getLinkQueryValue

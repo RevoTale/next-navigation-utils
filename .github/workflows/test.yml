@@ -1,0 +1,66 @@
+name: Test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - '**'
+permissions:
+  contents: read
+jobs:
+  Unit:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - run: pnpm i
+      - run: pnpm playwright install --with-deps
+      - run: pnpm test
+        env:
+          CI: true
+      - uses: actions/upload-artifact@v3 #Use v3 because v4 does not allow multiple artifacts with the same name
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+  Lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm i
+      - run: pnpm lint
+  Types:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3.0.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm i
+      - run: pnpm tsc
+  Test:
+    needs: [ Lint, Unit, Types ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: echo "Ready to merge!"

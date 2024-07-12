@@ -1,6 +1,6 @@
 'use client'
-import createLinker, {Linker} from "../createLinker";
-import useCurrentLink from "./useCurrentLink";
+import createLinker, {Linker} from "../createLinker"
+import useCurrentLink from "./useCurrentLink"
 
 const useLinker = () => {
     const link = useCurrentLink()

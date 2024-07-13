@@ -7,6 +7,9 @@ test('Test results',  async ({page}) => {
     expect(page.getByTestId('current_url_2'), '/')
     expect(page.getByTestId('current_url_3'), '/?string_param=params_some')
 
+    await page.goto('/?string_param=params_some')
+    expect(page.getByTestId('search_params_str'), 'params_some')
+
 
     await page.goto('/some-random-page')
 

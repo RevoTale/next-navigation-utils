@@ -26,3 +26,11 @@ export {default as encodeNumber} from './common/encodeNumber'
 
 export {default as decodePage} from './common/decodePage'
 export {default as encodePage} from './common/encodePage'
+export type {
+    QueryParameters,
+    QueryParameterValue,
+    ParameterValueDecoder,
+    ParameterValueEncoder,
+    ParameterValueCoderOptions,
+    ParameterOptions
+} from './types'

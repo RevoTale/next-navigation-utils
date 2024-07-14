@@ -9,29 +9,29 @@ importers:
   .:
     dependencies:
       next:
-        specifier: ^13.0 || ^14.0
+        specifier: ^14.0 || ^15.0
         version: 14.2.5(@playwright/test@1.45.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
-        specifier: ^17.0 || ^18.0 || ^19.0
+        specifier: ^18.0 || ^19.0
         version: 18.3.1
     devDependencies:
       '@changesets/cli':
-        specifier: ^2.27.5
+        specifier: ^2.27.7
         version: 2.27.7
       '@playwright/test':
-        specifier: ^1.44.1
+        specifier: ^1.45.1
         version: 1.45.1
       '@types/node':
-        specifier: ^20.14.2
+        specifier: ^20.14.10
         version: 20.14.10
       '@types/react':
-        specifier: ^18.3.3 || ^19.0.0
+        specifier: ^18.3.3
         version: 18.3.3
       changeset:
         specifier: ^0.2.6
         version: 0.2.6
       eslint:
-        specifier: ^8.56.0
+        specifier: ^8.57.0
         version: 8.57.0
       eslint-config-grisaia-react:
         specifier: ^0.6.16
@@ -43,7 +43,7 @@ importers:
         specifier: ^0.1.17
         version: 0.1.17(esbuild@0.19.12)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.3
         version: 5.5.3
     publishDirectory: dist
 
@@ -578,8 +578,8 @@ packages:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
 
-  caniuse-lite@1.0.30001641:
-    resolution: {integrity: sha512-Phv5thgl67bHYo1TtMY/MurjkHhV4EDaCosezRXgZ8jzA/Ub+wjxAvbGvjoFENStinwi5kCyOYV3mi5tOGykwA==}
+  caniuse-lite@1.0.30001642:
+    resolution: {integrity: sha512-3XQ0DoRgLijXJErLSl+bLnJ+Et4KqV1PY6JJBGAFlsNsz31zeAIncyeZfLCabHK/jtSh+671RM9YMldxjUPZtA==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2417,7 +2417,7 @@ snapshots:
 
   callsites@3.1.0: {}
 
-  caniuse-lite@1.0.30001641: {}
+  caniuse-lite@1.0.30001642: {}
 
   chalk@2.4.2:
     dependencies:
@@ -3316,7 +3316,7 @@ snapshots:
       '@next/env': 14.2.5
       '@swc/helpers': 0.5.5
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001641
+      caniuse-lite: 1.0.30001642
       graceful-fs: 4.2.11
       postcss: 8.4.31
       react: 18.3.1

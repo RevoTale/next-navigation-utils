@@ -1,9 +1,12 @@
-import {ParameterValueEncoder} from "../types"
+import {ParameterValueDecoder} from "../types"
 
-const decodeBool: ParameterValueEncoder<boolean | null> = value => {
-    if (value === null) {
-        return null
+const decodeBool: ParameterValueDecoder<boolean | null> = value => {
+    if (value === '1') {
+        return true
     }
-    return value ? '1' : '0'
+    if (value === '0') {
+        return false
+    }
+    return null
 }
 export default decodeBool

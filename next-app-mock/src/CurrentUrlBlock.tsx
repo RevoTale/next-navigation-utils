@@ -1,6 +1,6 @@
 'use client'
-import decodeBool from "../../src/common/decodeBool"
 import decodeString from "../../src/common/decodeString"
+import encodeBool from "../../src/common/encodeBool"
 import useCurrentLink from "../../src/hooks/useCurrentLink"
 import useLinker from "../../src/hooks/useLinker"
 
@@ -10,7 +10,7 @@ const CurrentUrlBlock = () => {
     return <div>
         <div data-testid="current_url">{currentUrl}</div>
         <div data-testid="current_url_1">{link().setValue({
-            encode: decodeBool,
+            encode: encodeBool,
             name: 'book_param'
         }, true).setValue({
             encode: decodeString,

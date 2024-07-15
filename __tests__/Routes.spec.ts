@@ -1,4 +1,5 @@
-import {expect, test,} from '@playwright/test'
+import {expect, test} from '@playwright/test'
+import queryToSearchParams from "../src/queryToSearchParams"
 
 test('Test results',  async ({page}) => {
 
@@ -17,4 +18,10 @@ test('Test results',  async ({page}) => {
     expect(page.getByTestId('current_url_1'), '/some-random-page?book_param=1&das_ist=das_ist_string')
     expect(page.getByTestId('current_url_2'), '/some-random-page')
     expect(page.getByTestId('current_url_3'), '/some-random-page?string_param=params_some')
+
+    expect(queryToSearchParams({
+        ww:['a','b'],
+        c:'n',
+        v:undefined
+    }),'ww=a&ww=b&c=n')
 })

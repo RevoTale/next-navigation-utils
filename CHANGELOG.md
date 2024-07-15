@@ -1,5 +1,11 @@
 # next-navigation-utils
 
+## 0.0.7
+
+### Patch Changes
+
+- 91a1a4f: Fix build did not emit all utils
+
 ## 0.0.6
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # next-navigation-utils
 
+## 0.0.6
+
+### Patch Changes
+
+- 08fe8a3: Fixes tests did not testing at all
+- 08fe8a3: Add a query to search params converter
+
 ## 0.0.5
 
 ### Patch Changes

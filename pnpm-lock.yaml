@@ -753,6 +753,7 @@ packages:
 
   eslint-config-grisaia-react@0.6.16:
     resolution: {integrity: sha512-mwC57sQbBahzF/XO/LMfu+EdwgIQrGCTTloqieRjFL8PIZvUH4teka71/HpGo1P4REpEVn8DKL1itz9qxW02iw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^6.6.0 || ^7.0.0
       eslint: ^8.44.2
@@ -763,6 +764,7 @@ packages:
 
   eslint-config-grisaia-typescript@0.6.16:
     resolution: {integrity: sha512-z7vRR6Ksrc9I7I/O2rx6voFbIEaQ33/FzvJmDJaeM6/jyQtGnb2qfXkI1KHvB/I0+c5SL7WYWU6anphm1JlUXQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^6.6.0 || ^7.0.0
       eslint: ^8.44.2
@@ -830,6 +832,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:

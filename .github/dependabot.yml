@@ -4,22 +4,24 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  commit-message:
+    groups:
+      all:
+        patterns:
+          - "*"
+    commit-message:
       prefix: "php packages"
-    ignore:
-      - dependency-name: "*"
-        update-types: [ "version-update:semver-minor","version-update:semver-major" ]
-  - package-ecosystem: github-actions
+  - package-ecosystem: "github-actions"
     directory: /
+    groups:
+      all:
+        patterns:
+          - "*"
     commit-message:
       prefix: "github-actions"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "*"
-        update-types: [ "version-update:semver-minor","version-update:semver-major" ]
-  - package-ecosystem: npm
-    directory: /
+  - package-ecosystem: "npm"
+    directory: ""/"
     groups:
       all:
         patterns:
@@ -28,18 +30,13 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "npm"
-    ignore:
-      - dependency-name: "*"
-        update-types: [ "version-update:semver-minor","version-update:semver-major" ]
   - package-ecosystem: "docker"
-    # Look for a `Dockerfile` in the `root` directory
+    groups:
+      all:
+        patterns:
+          - "*"
     directory: "/"
-    # Check for updates once a week
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "*"
-        update-types: [ "version-update:semver-minor","version-update:semver-major" ]
     commit-message:
       prefix: "docker"
-        

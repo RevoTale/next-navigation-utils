@@ -53,7 +53,8 @@
     "eslint-config-grisaia-react": "^0.6.17",
     "eslint-config-grisaia-typescript": "^0.6.18",
     "grisaia-package-builder": "^0.1.17",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "eslint-config-love": "^113.0.0"
   },
   "peerDependencies": {
     "next": "^14.0 || ^15.0",

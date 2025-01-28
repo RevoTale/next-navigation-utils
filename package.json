@@ -44,17 +44,17 @@
     "url": "https://github.com/RevoTale/next-navigation-utils/issues"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.11",
-    "@playwright/test": "^1.49.1",
-    "@types/node": "^22.10.7",
-    "@types/react": "^19.0.7",
+    "@changesets/cli": "^2.27.12",
+    "@playwright/test": "^1.50.0",
+    "@types/node": "^22.10.10",
+    "@types/react": "^19.0.8",
     "changeset": "^0.2.6",
-    "eslint": "^9.18.0",
+    "eslint": "^9.19.0",
     "eslint-config-grisaia-react": "^0.6.17",
     "eslint-config-grisaia-typescript": "^0.6.18",
     "grisaia-package-builder": "^0.1.17",
     "typescript": "^5.7.3",
-    "eslint-config-love": "^117.0.0"
+    "eslint-config-love": "^118.0.0"
   },
   "peerDependencies": {
     "next": "^14.0 || ^15.0",

@@ -45,16 +45,16 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
-    "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.5",
-    "@types/react": "^19.0.10",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.11",
     "changeset": "^0.2.6",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-grisaia-react": "^0.6.17",
     "eslint-config-grisaia-typescript": "^0.6.18",
     "grisaia-package-builder": "^0.1.17",
-    "typescript": "^5.7.3",
-    "eslint-config-love": "^118.0.0"
+    "typescript": "^5.8.2",
+    "eslint-config-love": "^119.0.0"
   },
   "peerDependencies": {
     "next": "^14.0 || ^15.0",

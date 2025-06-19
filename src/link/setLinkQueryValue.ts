@@ -1,4 +1,4 @@
-import {ParameterOptions} from "../types"
+import type {ParameterOptions} from "../types"
 import setSearchParamValue from "../searchParams/setSearchParamValue"
 
 const setLinkQueryValue = <T>(

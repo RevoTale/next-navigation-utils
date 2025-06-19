@@ -10,12 +10,18 @@ permissions:
   contents: read
 jobs:
   Unit:
+    name: Unit Tests (Node ${{ matrix.node-version }}, Next.js ${{ matrix.nextjs-version }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version: [20,22]
+        nextjs-version: ['14.0.0', '14.2.30', '15.0.0', '15.3.4']
         os: [ubuntu-latest]
+        exclude:
+          # Node 22 wasn't supported in early Next.js 14 versions
+          - node-version: 22
+            nextjs-version: '14.0.0'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4.1.0
@@ -23,19 +29,33 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-      - run: pnpm i
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            next-app-mock/pnpm-lock.yaml
+      - run: pnpm i && pnpm build
+      - name: Install Next.js version ${{ matrix.nextjs-version }}
+        run: |
+          cd next-app-mock
+          echo "Installing Next.js version ${{ matrix.nextjs-version }}"
+          pnpm add next@${{ matrix.nextjs-version }}
+          echo "Installed Next.js version:"
+          pnpm list next
       - run: pnpm playwright install --with-deps
       - run: pnpm test
         env:
           CI: true
+          NEXTJS_VERSION: ${{ matrix.nextjs-version }}
+          NODE_VERSION: ${{ matrix.node-version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-${{ matrix.node-version }}
+          name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-node${{ matrix.node-version }}-next${{ matrix.nextjs-version }}
           path: playwright-report/
+        if: failure()
       - uses: actions/download-artifact@v4
         with:
           pattern: my-artifacts-${{inputs.context}}*
           merge-multiple: true
+        if: failure()
   Lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5

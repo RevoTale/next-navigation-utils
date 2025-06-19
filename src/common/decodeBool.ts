@@ -1,4 +1,4 @@
-import {ParameterValueDecoder} from "../types"
+import type {ParameterValueDecoder} from "../types"
 
 const decodeBool: ParameterValueDecoder<boolean | null> = value => {
     if (value === '1') {

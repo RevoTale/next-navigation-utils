@@ -1,4 +1,4 @@
-import {ParameterValueEncoder} from "../types"
+import type {ParameterValueEncoder} from "../types"
 
 const encodeBool: ParameterValueEncoder<boolean|null> = value => {
     if (value === null) {

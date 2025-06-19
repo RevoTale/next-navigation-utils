@@ -1,4 +1,4 @@
-import {ParameterOptions, QueryParameters} from "../types"
+import type {ParameterOptions, QueryParameters} from "../types"
 
 const setQueryParamValue = <T>(
     query: QueryParameters,
@@ -10,7 +10,7 @@ const setQueryParamValue = <T>(
 
     return {
         ...query,
-        [name]: formattedValue === null ? undefined : formattedValue,
+        [name]: formattedValue ?? undefined,
     }
 }
 

@@ -1,6 +1,6 @@
-import {ParameterValueEncoder} from "../types"
+import type {ParameterValueEncoder} from "../types"
 
-const encodePage: ParameterValueEncoder<number> = value => {
-    return value === 1 ? null : value.toString()
-}
+const DEFAULT_PAGE = 1
+
+const encodePage: ParameterValueEncoder<number> = value => value === DEFAULT_PAGE ? null : value.toString()
 export default encodePage

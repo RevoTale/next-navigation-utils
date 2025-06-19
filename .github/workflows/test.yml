@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20,22]
-        nextjs-version: ['14.0.0', '14.2.30', '15.0.0', '15.1.3']
+        nextjs-version: ['14.0.0', '14.2.30', '15.0.0', '15.3.4']
         os: [ubuntu-latest]
         exclude:
           # Node 22 wasn't supported in early Next.js 14 versions

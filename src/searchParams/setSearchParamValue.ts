@@ -1,4 +1,4 @@
-import {ParameterOptions} from "../types"
+import type {ParameterOptions} from "../types"
 
 const setSearchParamValue = <T>(params: URLSearchParams, {
     name,

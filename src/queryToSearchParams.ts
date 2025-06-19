@@ -1,9 +1,12 @@
-import {QueryParameters} from "./types"
+import type {QueryParameters} from "./types"
 
 const queryToSearchParams = (query: QueryParameters): URLSearchParams => {
     const params = new URLSearchParams
     for (const name in query) {
-        const encoded = query[name]
+        if (!Object.prototype.hasOwnProperty.call(query, name)) {
+            continue
+        }
+        const {[name]: encoded} = query
         if (encoded === undefined) {
             continue
         }

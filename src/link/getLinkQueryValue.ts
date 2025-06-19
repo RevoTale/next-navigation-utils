@@ -1,6 +1,6 @@
 
 import {parse} from 'querystring'
-import {ParameterOptions} from "../types"
+import type {ParameterOptions} from "../types"
 
 const getLinkQueryValue = <T>(
 	currentUrl: string,

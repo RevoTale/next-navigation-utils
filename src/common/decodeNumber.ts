@@ -1,4 +1,4 @@
-import {ParameterValueDecoder} from "../types"
+import type {ParameterValueDecoder} from "../types"
 
 const decodeNumber: ParameterValueDecoder<number | null> = param => {
 	if (typeof param === 'string') {

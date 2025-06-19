@@ -1,6 +1,4 @@
-import {ParameterValueEncoder} from "../types"
+import type {ParameterValueEncoder} from "../types"
 
-const encodeNumber: ParameterValueEncoder<number | null> = value => {
-	return value === null ? null : value.toString()
-}
+const encodeNumber: ParameterValueEncoder<number | null> = value => value === null ? null : value.toString()
 export default encodeNumber

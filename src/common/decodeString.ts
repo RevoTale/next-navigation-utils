@@ -1,4 +1,6 @@
-import {ParameterValueDecoder} from "../types"
+import type {ParameterValueDecoder} from "../types"
+
+const FIRST_ELEMENT_INDEX = 0
 
 const decodeString: ParameterValueDecoder<string | null> = param => {
 	if (typeof param === 'string') {
@@ -6,6 +8,6 @@ const decodeString: ParameterValueDecoder<string | null> = param => {
 	} else if (param === null) {
 		return null
 	}
-	return param[0]
+	return param[FIRST_ELEMENT_INDEX]
 }
 export default decodeString

@@ -8,6 +8,7 @@ export {default as setQueryParamValue} from './query/setQueryParamValue'
 
 export {default as getSearchParamValue} from './searchParams/getSearchParamValue'
 export {default as setSearchParamValue} from './searchParams/setSearchParamValue'
+export {default as useParamState} from './state/useParamState'
 
 export {default as createLinker} from './createLinker'
 export {default as useCurrentLink} from './hooks/useCurrentLink'

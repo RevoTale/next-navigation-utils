@@ -23,7 +23,7 @@ jobs:
           - node-version: 22
             nextjs-version: '14.0.0'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4.1.0
       - uses: actions/setup-node@v4
         with:
@@ -51,7 +51,7 @@ jobs:
           name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-node${{ matrix.node-version }}-next${{ matrix.nextjs-version }}
           path: playwright-report/
         if: failure()
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           pattern: my-artifacts-${{inputs.context}}*
           merge-multiple: true
@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4.1.0
       - uses: actions/setup-node@v4
         with:
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4.1.0
       - uses: actions/setup-node@v4
         with:

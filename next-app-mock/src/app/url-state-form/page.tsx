@@ -1,9 +1,11 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, Suspense } from "react";
 import Form from "./Form";
 
 const Page:FunctionComponent = ()=>{
 return <div>
-    <Form/>
+    <Suspense>
+        <Form/>
+    </Suspense>
 </div>
 
 }

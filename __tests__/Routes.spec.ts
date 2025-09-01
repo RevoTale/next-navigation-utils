@@ -26,3 +26,23 @@ test('Test results', async ({page}) => {
         v: undefined
     }).toString()).toBe('ww=a&ww=b&c=n')
 })
+test('URL state syncroniztion', async ({page})=>{
+    await page.goto('/url-state-form')
+    await expect(page).toHaveURL('/url-state-form')
+    await page.locator('#form-input').pressSequentially('Hello World!',{
+        delay: 100
+    });
+
+    expect(await page.getByTestId('url_change_time').innerText(),).toBe('0')
+    await (new Promise(resolve => setTimeout(resolve, 1000))); //Default debounce timer
+    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
+
+    await (new Promise(resolve => setTimeout(resolve, 1000))); //Check whether no redundant updates triggered twice
+    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
+    
+    // URLSearchParams uses form encoding where spaces become + instead of %20
+    const expectedUrl = new URLSearchParams();
+    expectedUrl.set('url_change_test_input_value', 'Hello World!');
+    await expect(page).toHaveURL('/url-state-form?' + expectedUrl.toString())
+
+})

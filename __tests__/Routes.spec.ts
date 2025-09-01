@@ -1,48 +1,70 @@
-import {expect, test} from '@playwright/test'
-import queryToSearchParams from "../src/queryToSearchParams"
+import { expect, test } from '@playwright/test'
+import queryToSearchParams from '../src/queryToSearchParams'
 
-test('Test results', async ({page}) => {
-    await page.goto('/')
-    await expect(page).toHaveURL('/')
-    expect(await page.getByTestId('current_url').innerText(),).toBe('/')
-    expect(await page.getByTestId('current_url_1').innerText(),).toBe('/?book_param=1&das_ist=das_ist_string')
-    expect(await page.getByTestId('current_url_2').innerText(),).toBe('/')
-    expect(await page.getByTestId('current_url_3').innerText(),).toBe('/?string_param=params_some')
+test('URL parameter handling and linker functionality', async ({ page }) => {
+  await page.goto('/')
+  await expect(page).toHaveURL('/')
+  
+  await expect(page.getByTestId('current_url')).toHaveText('/')
+  await expect(page.getByTestId('current_url_1')).toHaveText('/?book_param=1&das_ist=das_ist_string')
+  await expect(page.getByTestId('current_url_2')).toHaveText('/')
+  await expect(page.getByTestId('current_url_3')).toHaveText('/?string_param=params_some')
 
-    await page.goto('/?string_param=params_some')
-    expect(await page.getByTestId('search_params_str').innerText(),).toBe('params_some')
+  await page.goto('/?string_param=params_some')
+  await expect(page.getByTestId('search_params_str')).toHaveText('params_some')
 
-
-    await page.goto('/some-random-page')
-
-    expect(await page.getByTestId('current_url').innerText(),).toBe('/some-random-page')
-    expect(await page.getByTestId('current_url_1').innerText(),).toBe('/some-random-page?book_param=1&das_ist=das_ist_string')
-    expect(await page.getByTestId('current_url_2').innerText(),).toBe('/some-random-page')
-    expect(await page.getByTestId('current_url_3').innerText(),).toBe('/some-random-page?string_param=params_some')
-
-    expect(queryToSearchParams({
-        ww: ['a', 'b'],
-        c: 'n',
-        v: undefined
-    }).toString()).toBe('ww=a&ww=b&c=n')
+  await page.goto('/some-random-page')
+  
+  await expect(page.getByTestId('current_url')).toHaveText('/some-random-page')
+  await expect(page.getByTestId('current_url_1')).toHaveText('/some-random-page?book_param=1&das_ist=das_ist_string')
+  await expect(page.getByTestId('current_url_2')).toHaveText('/some-random-page')
+  await expect(page.getByTestId('current_url_3')).toHaveText('/some-random-page?string_param=params_some')
 })
-test('URL state syncroniztion', async ({page})=>{
-    await page.goto('/url-state-form')
-    await expect(page).toHaveURL('/url-state-form')
-    await page.locator('#form-input').pressSequentially('Hello World!',{
-        delay: 100
-    });
 
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('0')
-    await (new Promise(resolve => setTimeout(resolve, 1000))); //Default debounce timer
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
+test('queryToSearchParams utility function', async () => {
+  const result = queryToSearchParams({
+    ww: ['a', 'b'],
+    c: 'n',
+    v: undefined
+  })
+  
+  expect(result.toString()).toBe('ww=a&ww=b&c=n')
+})
+test('useParamState hook - URL state synchronization with debouncing', async ({ page }) => {
+  await page.goto('/url-state-form')
+  await expect(page).toHaveURL('/url-state-form')
+  
+  await page.getByTestId('form-input').pressSequentially('Hello World!', {
+    delay: 100
+  })
 
-    await (new Promise(resolve => setTimeout(resolve, 1000))); //Check whether no redundant updates triggered twice
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
-    
-    // URLSearchParams uses form encoding where spaces become + instead of %20
-    const expectedUrl = new URLSearchParams();
-    expectedUrl.set('url_change_test_input_value', 'Hello World!');
-    await expect(page).toHaveURL('/url-state-form?' + expectedUrl.toString())
+  await expect(
+    page.getByTestId('url_change_time'),
+    'No URL changes should occur while user is typing due to debouncing'
+  ).toHaveText('0')
+  
+  await page.waitForTimeout(1000)
+  
+  await expect(
+    page.getByTestId('url_change_time'),
+    'Debounce callback should trigger when user stops typing'
+  ).toHaveText('1')
 
+  await page.waitForTimeout(1000)
+  await expect(
+    page.getByTestId('url_change_time'),
+    'No additional updates should occur after debounce completes'
+  ).toHaveText('1')
+
+  const expectedUrl = new URLSearchParams()
+  expectedUrl.set('url_change_test_input_value', 'Hello World!')
+  await expect(page).toHaveURL('/url-state-form?' + expectedUrl.toString())
+
+  await page.getByTestId('change_url_button').click()
+
+  await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
+  await expect(
+    page.getByTestId('form-input'),
+    'Form input should sync with external URL changes'
+  ).toHaveValue('text_updated_from_external_router')
 })

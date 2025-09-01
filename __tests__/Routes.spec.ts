@@ -33,16 +33,20 @@ test('URL state syncroniztion', async ({page})=>{
         delay: 100
     });
 
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('0')
-    await (new Promise(resolve => setTimeout(resolve, 1000))); //Default debounce timer
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
+    expect(await page.getByTestId('url_change_time').innerText(),'No changes commited while user is typing').toBe('0')
+    await (new Promise(resolve => setTimeout(resolve, 1000)));
+    expect(await page.getByTestId('url_change_time').innerText(),'Debounce callback was called when user has enough gap between keyboard pressing').toBe('1')
 
-    await (new Promise(resolve => setTimeout(resolve, 1000))); //Check whether no redundant updates triggered twice
-    expect(await page.getByTestId('url_change_time').innerText(),).toBe('1')
+    await (new Promise(resolve => setTimeout(resolve, 1000)));
+    expect(await page.getByTestId('url_change_time').innerText(),'No redundant updates triggered twice').toBe('1')
     
     // URLSearchParams uses form encoding where spaces become + instead of %20
     const expectedUrl = new URLSearchParams();
     expectedUrl.set('url_change_test_input_value', 'Hello World!');
     await expect(page).toHaveURL('/url-state-form?' + expectedUrl.toString())
 
+    await page.getByTestId('change_url_button').click()
+
+    await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
+    expect(await page.getByTestId('form-input').inputValue(),'Input values is in sync with the external URL changes').toBe('text_updated_from_external_router')
 })

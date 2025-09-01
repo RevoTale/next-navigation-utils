@@ -29,7 +29,7 @@ test('Test results', async ({page}) => {
 test('URL state syncroniztion', async ({page})=>{
     await page.goto('/url-state-form')
     await expect(page).toHaveURL('/url-state-form')
-    await page.locator('#form-input').pressSequentially('Hello World!',{
+    await page.getByTestId('form-input').pressSequentially('Hello World!',{
         delay: 100
     });
 
@@ -48,5 +48,5 @@ test('URL state syncroniztion', async ({page})=>{
     await page.getByTestId('change_url_button').click()
 
     await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
-    expect(await page.getByTestId('form-input').inputValue(),'Input values is in sync with the external URL changes').toBe('text_updated_from_external_router')
+    await expect(page.getByTestId('form-input'),'Input values is in sync with the external URL changes').toHaveValue('text_updated_from_external_router')
 })

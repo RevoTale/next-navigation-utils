@@ -22,7 +22,7 @@ const Form:FunctionComponent = ()=>{
     }
   },[queryStr])
     return <div>
-        <input id="form-input" data-testid="form-input" type="text" onChange={e=>{
+        <input  data-testid="form-input" type="text" onChange={e=>{
             setValue(e.target.value)
         }} value={value??''}></input>
         <div data-testid="url_change_time">{countSearchParamsChanged}</div>

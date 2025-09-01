@@ -17,10 +17,13 @@ const useParamState=<T,>(params:ParameterOptions<T>,debounceTimeout:number = def
     },debounceTimeout)
     const currentLink = linker().toString()
     useEffect(()=>{
-        if (linker().setValue(params,value).toString() !== currentLink && !updateQueryValue.isPending()) {
-            setValue(value)
+        const inputValueURL = linker().setValue(params,value).toString();
+
+        if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
+            setValue(queryValue)
         }
-    },[debounceTimeout, currentLink])
+    },[debounceTimeout, currentLink,queryValue,value])
+
     return [value,(value:T)=>{
         setValue(value)
         updateQueryValue(value)

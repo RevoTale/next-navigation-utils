@@ -1,6 +1,6 @@
 'use client'
 import { decodeString, encodeString, useParamState } from "@/dist-lib";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 
 const Form:FunctionComponent = ()=>{
@@ -9,6 +9,7 @@ const Form:FunctionComponent = ()=>{
     decode:decodeString,
     name:'url_change_test_input_value'
   })
+  const router = useRouter()
   const [countSearchParamsChanged,setCountSearchParamsChanged] = useState(0)
   const queryStr = useSearchParams().toString()
   const prevQueryStrRef = useRef(queryStr)
@@ -21,10 +22,13 @@ const Form:FunctionComponent = ()=>{
     }
   },[queryStr])
     return <div>
-        <input id="form-input" type="text" onChange={e=>{
+        <input  data-testid="form-input" type="text" onChange={e=>{
             setValue(e.target.value)
         }} value={value??''}></input>
         <div data-testid="url_change_time">{countSearchParamsChanged}</div>
+        <button data-testid="change_url_button" onClick={() => {
+          router.push('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
+        }}>Change URL</button>
     </div>
 }
 export default Form

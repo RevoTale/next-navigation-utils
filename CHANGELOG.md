@@ -1,5 +1,12 @@
 # next-navigation-utils
 
+## 0.1.0
+
+### Minor Changes
+
+- c5e789a: Add test cases for the external URL changes
+- c5e789a: Fix the state management when URL changed from outside of hook
+
 ## 0.0.8
 
 ### Patch Changes

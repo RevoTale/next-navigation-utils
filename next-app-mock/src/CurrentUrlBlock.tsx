@@ -1,8 +1,5 @@
 'use client'
-import decodeString from "../../dist/common/decodeString"
-import encodeBool from "../../dist/common/encodeBool"
-import useCurrentLink from "../../dist/hooks/useCurrentLink"
-import useLinker from "../../dist/hooks/useLinker"
+import {useLinker,useCurrentLink,encodeBool,decodeString} from "@/dist-lib"
 
 const CurrentUrlBlock = () => {
     const currentUrl = useCurrentLink()

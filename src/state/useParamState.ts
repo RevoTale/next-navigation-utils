@@ -6,7 +6,7 @@ import useLinker from "../hooks/useLinker"
 import useSearchParam from "../hooks/useSearchParam"
 type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
-const useQueryState=<T,>(params:ParameterOptions<T>,debounceTimeout:number = defaultDebounceTimer):[T,SetStateCallback<T>]=>{
+const useParamState=<T,>(params:ParameterOptions<T>,debounceTimeout:number = defaultDebounceTimer):[T,SetStateCallback<T>]=>{
     const router =  useRouter()
     const linker = useLinker()
     const queryValue =  useSearchParam(params)
@@ -20,10 +20,10 @@ const useQueryState=<T,>(params:ParameterOptions<T>,debounceTimeout:number = def
         if (linker().setValue(params,value).toString() !== currentLink && !updateQueryValue.isPending()) {
             setValue(value)
         }
-    },[debounceTimeout,currentLink])
+    },[debounceTimeout, currentLink])
     return [value,(value:T)=>{
-            setValue(value)
+        setValue(value)
         updateQueryValue(value)
     }]
 }
-export default useQueryState
+export default useParamState

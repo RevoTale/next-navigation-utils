@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import type { ParameterOptions } from "../types"
+import type { ParameterOptions, RelativeURL } from "../types"
 import {useDebouncedCallback} from 'use-debounce'
 import useLinker from "../hooks/useLinker"
 import useSearchParam from "../hooks/useSearchParam"
@@ -9,7 +9,7 @@ type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
 interface ParamsStateOptions {
     debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
-    modifyState?: (value: Linker) => void // Usage example: page reset when selecting the search form filter values
+    modifyState?: (value: Linker<RelativeURL>) => void // Usage example: page reset when selecting the search form filter values
 }
 const useParamState=<T,>(params:ParameterOptions<T>,{
     debounce = defaultDebounceTimer,
@@ -26,16 +26,18 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         if (undefined !== modifyState) {
             modifyState(builder)
         }
-        router.push((builder).toString())
+        router.push((builder.getLink()).toString())
     },debounce)
-    const currentLink = linker().toString()
     useEffect(()=>{
-        const inputValueURL = linker().setValue(params,value).toString();
+        const builder =  linker()
+        const currentLink = builder.toString()
+        builder.setValue(params,value)
+        const inputValueURL =builder.toString();
 
         if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
             setValue(queryValue)
         }
-    },[debounce, currentLink,queryValue,value])
+    },[debounce, linker,queryValue,value])
 
     return [value,(value:T)=>{
         setValue(value)

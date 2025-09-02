@@ -1,3 +1,5 @@
+import type { ReadonlyURLSearchParams } from "next/navigation";
+
 export type QueryParameterValue = string | string[] | null
 export type QueryParameters = Record<string, string | string[] | undefined>;
 
@@ -11,3 +13,8 @@ export interface ParameterValueCoderOptions<T> {
 export type ParameterOptions<T> = {
     name: string
 } & ParameterValueCoderOptions<T>
+export interface RelativeURL {
+    pathname: string
+    search: ReadonlyURLSearchParams|URLSearchParams
+    toString: () => string
+}

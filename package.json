@@ -44,14 +44,14 @@
     "url": "https://github.com/RevoTale/next-navigation-utils/issues"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.4",
-    "@playwright/test": "^1.53.1",
-    "@types/node": "^24.0.3",
-    "@types/react": "^19.1.8",
+    "@changesets/cli": "^2.29.6",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
     "changeset": "^0.2.6",
-    "eslint": "^9.29.0",
+    "eslint": "^9.34.0",
     "eslint-config-love": "^120.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "next": "^14.0 || ^15.0",

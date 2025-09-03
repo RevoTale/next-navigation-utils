@@ -1,4 +1,4 @@
-import type {QueryParameters} from "./types"
+import type {QueryParameters} from "../types"
 
 const queryToSearchParams = (query: QueryParameters): URLSearchParams => {
     const params = new URLSearchParams

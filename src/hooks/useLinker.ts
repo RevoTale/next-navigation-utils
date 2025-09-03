@@ -1,6 +1,6 @@
 'use client'
 import { useCallback } from "react"
-import createLinker, {type Linker} from "../createLinker"
+import createLinker, {type Linker} from "../utils/createLinker"
 import type { RelativeURL } from "../types"
 import useRelativeLink from "./useRelativeLink"
 

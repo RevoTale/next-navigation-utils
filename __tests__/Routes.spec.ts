@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import queryToSearchParams from '../src/queryToSearchParams'
+import queryToSearchParams from '../src/utils/queryToSearchParams'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
   await page.goto('/')

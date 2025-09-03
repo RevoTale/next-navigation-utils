@@ -8,13 +8,18 @@ export {default as setQueryParamValue} from './query/setQueryParamValue'
 
 export {default as getSearchParamValue} from './searchParams/getSearchParamValue'
 export {default as setSearchParamValue} from './searchParams/setSearchParamValue'
-export {default as useParamState} from './state/useParamState'
 
-export {default as createLinker} from './createLinker'
+export {default as createRelativeLink} from './utils/createRelativeLink'
+export {default as createLinker} from './utils/createLinker'
+
+export {default as parseRelativeLink} from './utils/parseLink'
+export {default as queryToSearchParams} from './utils/queryToSearchParams'
+
+
+export {default as useParamState} from './state/useParamState'
 export {default as useCurrentLink} from './hooks/useRelativeLink'
 export {default as useLinker} from './hooks/useLinker'
 export {default as useSearchParam} from './hooks/useSearchParam'
-export {default as queryToSearchParams} from './queryToSearchParams'
 
 export {default as decodeBool} from './common/decodeBool'
 export {default as encodeBool} from './common/encodeBool'

@@ -13,8 +13,10 @@ export interface ParameterValueCoderOptions<T> {
 export type ParameterOptions<T> = {
     name: string
 } & ParameterValueCoderOptions<T>
+export type RelativePathname = `/${string}` | ''
+
 export interface RelativeURL {
-    pathname: string
+    pathname: RelativePathname
     search: ReadonlyURLSearchParams|URLSearchParams
     toString: () => string
 }

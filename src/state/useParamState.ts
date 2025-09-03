@@ -4,7 +4,7 @@ import type { ParameterOptions, RelativeURL } from "../types"
 import {useDebouncedCallback} from 'use-debounce'
 import useLinker from "../hooks/useLinker"
 import useSearchParam from "../hooks/useSearchParam"
-import type { Linker } from "../createLinker"
+import type { Linker } from "../utils/createLinker"
 type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
 interface ParamsStateOptions {

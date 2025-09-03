@@ -50,7 +50,7 @@
     "@types/react": "^19.1.12",
     "changeset": "^0.2.6",
     "eslint": "^9.34.0",
-    "eslint-config-love": "^120.0.0",
+    "eslint-config-love": "^122.0.0",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
@@ -60,6 +60,6 @@
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
     "tsup": "^8.5.0",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.6"
   }
 }

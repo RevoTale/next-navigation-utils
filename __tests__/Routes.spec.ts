@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test'
 import queryToSearchParams from '../src/utils/queryToSearchParams'
+import createLinker from '../src/utils/createLinker'
+import parseLink from '../src/utils/parseLink'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
   await page.goto('/')
@@ -67,4 +69,9 @@ test('useParamState hook - URL state synchronization with debouncing', async ({ 
     page.getByTestId('form-input'),
     'Form input should sync with external URL changes'
   ).toHaveValue('text_updated_from_external_router')
+})
+
+test('linker',()=>{
+  const ss = parseLink('/some-pathname?param1=1')
+  const builder = createLinker(ss)
 })

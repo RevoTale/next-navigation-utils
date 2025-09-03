@@ -13,6 +13,7 @@ export interface Linker<T  extends RelativeURL|URL> {
 // Function overloads provide compile-time type safety
 function createLinker(link: URL): Linker<URL>
 function createLinker(link: RelativeURL): Linker<RelativeURL>
+function createLinker(link: RelativeURL | URL): Linker<RelativeURL | URL>
 function createLinker(link: RelativeURL | URL): Linker<RelativeURL | URL> {
     const params = new URLSearchParams(link.search.toString())
     

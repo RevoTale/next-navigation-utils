@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 
 
 
-const useCurrentLink = (): RelativeURL => {
+const useRelativeLink = (): RelativeURL => {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     return useMemo<RelativeURL>(() => ({
@@ -14,4 +14,4 @@ const useCurrentLink = (): RelativeURL => {
     }),[pathname, searchParams])
 }
 
-export default useCurrentLink
+export default useRelativeLink

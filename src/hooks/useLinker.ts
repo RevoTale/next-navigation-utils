@@ -2,10 +2,10 @@
 import { useCallback } from "react"
 import createLinker, {type Linker} from "../createLinker"
 import type { RelativeURL } from "../types"
-import useCurrentLink from "./useRelativeLink"
+import useRelativeLink from "./useRelativeLink"
 
 const useLinker = (): () => Linker<RelativeURL> => {
-    const link = useCurrentLink()
+    const link = useRelativeLink()
     return useCallback((): Linker<RelativeURL> => createLinker(link),[link])
 }
 

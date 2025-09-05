@@ -1,7 +1,7 @@
 import type {QueryParameters} from "../types"
 
 const queryToSearchParams = (query: QueryParameters): URLSearchParams => {
-    const params = new URLSearchParams
+    const params = new URLSearchParams()
     for (const name in query) {
         if (!Object.prototype.hasOwnProperty.call(query, name)) {
             continue

@@ -14,7 +14,7 @@ interface ParamsStateOptions {
 const useParamState=<T,>(params:ParameterOptions<T>,{
     debounce = defaultDebounceTimer,
     modifyState 
-}:ParamsStateOptions):[T,SetStateCallback<T>]=>{
+}:ParamsStateOptions={}):[T,SetStateCallback<T>]=>{
     const router =  useRouter()
     const linker = useLinker()
     const queryValue =  useSearchParam(params)

@@ -1,11 +1,12 @@
-import { URLSearchParams } from "url"
 import type {ParameterOptions, RelativeURL} from "../types"
 import setSearchParamValue from "../searchParams/setSearchParamValue"
 import getNormalizedQueryStr from "./getNormalizedQueryStr"
 
+export type SetValueCallback = <V>(opt: Pick<ParameterOptions<V>, 'name' | 'encode'>, value: V) => void
+export type GetValueCallback = <V>(opt: Pick<ParameterOptions<V>, 'name' | 'decode'>) => V
 export interface Linker<T  extends RelativeURL|URL> {
-    setValue: <V>(opt: Pick<ParameterOptions<V>, 'name' | 'encode'>, value: V) => void,
-    getValue: <V>(opt: Pick<ParameterOptions<V>, 'name' | 'decode'>) => V
+    setValue: SetValueCallback,
+    getValue: GetValueCallback,
     getLink: () => T
     toString: () => string
 }

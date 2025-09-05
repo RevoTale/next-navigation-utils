@@ -13,7 +13,8 @@ const port = Number(process.env.PORT)||3033
 export default defineConfig({
   webServer: {
     command: `pnpm -C ./next-app-mock build && pnpm -C ./next-app-mock start --port ${port}`,
-    port:port
+    port:port,
+    reuseExistingServer: false // Always fresh for testing
   },
   use: {
     baseURL: `http://127.0.0.1:${port}`,
@@ -24,6 +25,7 @@ export default defineConfig({
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
+
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */

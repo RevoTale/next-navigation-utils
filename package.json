@@ -36,7 +36,7 @@
     "changeset:publish": "changeset publish",
     "prepare": "pnpm build",
     "test": "pnpm lint && pnpm tsc && pnpm unit",
-    "unit": "playwright test",
+    "unit": "playwright test -x",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

@@ -1,10 +1,12 @@
 'use client'
-import createLinker, {type Linker} from "../createLinker"
-import useCurrentLink from "./useCurrentLink"
+import { useCallback } from "react"
+import createLinker, {type Linker} from "../utils/createLinker"
+import type { RelativeURL } from "../types"
+import useRelativeLink from "./useRelativeLink"
 
-const useLinker = () => {
-    const link = useCurrentLink()
-    return (): Linker => createLinker(link)
+const useLinker = (): () => Linker<RelativeURL> => {
+    const link = useRelativeLink()
+    return useCallback((): Linker<RelativeURL> => createLinker(link),[link])
 }
 
 export default useLinker

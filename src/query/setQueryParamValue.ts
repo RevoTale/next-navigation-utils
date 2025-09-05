@@ -4,14 +4,9 @@ const setQueryParamValue = <T>(
     query: QueryParameters,
     {name, encode}: Pick<ParameterOptions<T>, 'name' | 'encode'>,
     value: T
-): QueryParameters => {
-
-    const formattedValue = encode(value)
-
-    return {
+): QueryParameters => ({
         ...query,
-        [name]: formattedValue ?? undefined,
-    }
-}
+        [name]: encode(value) ?? undefined,
+    })
 
 export default setQueryParamValue

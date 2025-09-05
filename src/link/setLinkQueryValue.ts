@@ -1,14 +1,34 @@
-import type {ParameterOptions} from "../types"
-import setSearchParamValue from "../searchParams/setSearchParamValue"
+import type {ParameterOptions, RelativeURL} from "../types"
+import parseLink from "../utils/parseLink";
+import createLinker from "../utils/createLinker";
 
-const setLinkQueryValue = <T>(
+function setLinkQueryValue<T>(
+    link: URL,
+    opts: Pick<ParameterOptions<T>, 'name'|'encode'>,
+    value: T
+): URL;
+
+function setLinkQueryValue<T>(
     link: string,
     opts: Pick<ParameterOptions<T>, 'name'|'encode'>,
     value: T
-): string => {
-    const url = new URL(link, 'https://example.com')
-    setSearchParamValue(url.searchParams, opts, value)
-    return `${url.pathname}${url.search}`
+): RelativeURL;
+
+function setLinkQueryValue<T>(
+    link: string,
+    opts: Pick<ParameterOptions<T>, 'name'|'encode'>,
+    value: T
+): RelativeURL|URL;
+function setLinkQueryValue<T>(
+    link: URL|string,
+    opts: Pick<ParameterOptions<T>, 'name'|'encode'>,
+    value: T
+): URL|RelativeURL {
+
+    const parsed =  link instanceof URL?link:parseLink(link);
+    const linker = createLinker(parsed)
+    linker.setValue(opts,value);
+    return linker.getLink();
 }
 
 export default setLinkQueryValue

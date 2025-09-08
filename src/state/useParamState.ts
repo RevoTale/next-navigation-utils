@@ -40,7 +40,7 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
             setValue(queryValue)
         }
-    },[debounce, link,queryValue,value])
+    },[debounce, link, params, queryValue, updateQueryValue, value])
 
     return [value,(value:T)=>{
         setValue(value)

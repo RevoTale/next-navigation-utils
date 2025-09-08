@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test'
-import queryToSearchParams from '../src/queryToSearchParams'
+import { createLinkerUrl, parseLink, createLinker, queryToSearchParams } from '../src/index'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
+
   await page.goto('/')
   await expect(page).toHaveURL('/')
   
@@ -14,7 +15,7 @@ test('URL parameter handling and linker functionality', async ({ page }) => {
   await expect(page.getByTestId('search_params_str')).toHaveText('params_some')
 
   await page.goto('/some-random-page')
-  
+  await expect(page).toHaveURL('/some-random-page')
   await expect(page.getByTestId('current_url')).toHaveText('/some-random-page')
   await expect(page.getByTestId('current_url_1')).toHaveText('/some-random-page?book_param=1&das_ist=das_ist_string')
   await expect(page.getByTestId('current_url_2')).toHaveText('/some-random-page')
@@ -33,6 +34,7 @@ test('queryToSearchParams utility function', async () => {
 test('useParamState hook - URL state synchronization with debouncing', async ({ page }) => {
   await page.goto('/url-state-form')
   await expect(page).toHaveURL('/url-state-form')
+  page.on('console', msg => console.log(msg.text()));
   
   await page.getByTestId('form-input').pressSequentially('Hello World!', {
     delay: 100
@@ -59,12 +61,38 @@ test('useParamState hook - URL state synchronization with debouncing', async ({ 
   const expectedUrl = new URLSearchParams()
   expectedUrl.set('url_change_test_input_value', 'Hello World!')
   await expect(page).toHaveURL('/url-state-form?' + expectedUrl.toString())
+    await expect(
+    page.getByTestId('form-input'),
+    'Input value is the same as typed'
+  ).toHaveValue('Hello World!',{
+    timeout: 3000
+  })
 
   await page.getByTestId('change_url_button').click()
 
-  await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
+  await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_nextjs_router')
+
   await expect(
     page.getByTestId('form-input'),
-    'Form input should sync with external URL changes'
-  ).toHaveValue('text_updated_from_external_router')
+    'Form input should sync with Next.js router URL changes'
+  ).toHaveValue('text_updated_from_nextjs_router',{
+    timeout: 3000
+  })
+
+    await page.goto('/url-state-form?url_change_test_input_value=text_updated_from_browser_router')
+    await expect(page).toHaveURL('/url-state-form?url_change_test_input_value=text_updated_from_browser_router')
+    
+    await expect(
+      page.getByTestId('form-input'),
+      'Form input should sync with browser API URL changes'
+    ).toHaveValue('text_updated_from_browser_router',{
+      timeout: 3000
+    })
+})
+
+test('linker',    ()=>{
+  const ss = parseLink('/some-pathname?param1=1')
+  const builder =  ss instanceof URL ? createLinkerUrl(ss) : createLinker(ss)
+   expect(builder.asString()).toBe('/some-pathname?param1=1')
+    expect(builder.getLink()).toEqual(ss)
 })

@@ -3,26 +3,27 @@
 [![npm version](https://badge.fury.io/js/next-navigation-utils.svg)](https://badge.fury.io/js/next-navigation-utils)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
-Type-safe URL parameter management for Next.js applications. Seamlessly bridge server-side `searchParams`, client-side `URLSearchParams`, and URL strings with full TypeScript support.
+Type-safe URL parameter management for Next.js applications. Seamlessly bridge server-side `searchParams`, client-side `URLSearchParams`, and relative/absolute URLs via a fluent Link Builder — all with full TypeScript support.
 
 ## Why next-navigation-utils?
 
-Next.js provides different URL parameter APIs depending on context:
+Next.js exposes different URL param shapes:
 
 - **Server Components**: `searchParams` object `{ category: 'electronics', page: ['1'] }`
-- **Client Components**: `useSearchParams()` returns `URLSearchParams` 
-- **Links & Navigation**: URL strings `'/products?category=electronics&page=1'`
+- **Client Components**: `useSearchParams()` → `URLSearchParams`
+- **Navigation / External**: raw URL strings `/products?category=electronics&page=1`
 
-Converting between these formats while maintaining type safety is complex. This library provides a unified, type-safe interface across all contexts.
+Converting between them while keeping type safety & avoiding brittle string fiddling is noisy. This library gives you one consistent, typed toolkit.
 
 ## Features
 
-- 🔄 **Universal API** - Same functions work with server, client, and URL contexts
-- 🎯 **Type Safety** - Full TypeScript support with encode/decode patterns
-- 🪝 **React Hooks** - Ready-to-use hooks for client-side state management
-- 🔗 **URL Building** - Fluent API for constructing URLs with parameters
-- ⚡ **Zero Config** - Works with Next.js App Router out of the box
-- 🎛️ **State Sync** - Automatic URL ↔ component state synchronization
+- 🔄 **Universal API** – Same encoder/decoder pattern works everywhere
+- 🎯 **Type Safety** – Strong typing for parameters & return values
+- 🪝 **React Hooks** – Extract & sync URL state with zero boilerplate
+- 🔗 **Fluent Link Builder** – Immutable, chainable URL editing (relative & absolute)
+- ⚡ **Next.js Native** – Designed for the App Router (14+ / 15+)
+- 🎛️ **State Sync** – Debounced two‑way sync between input state & URL
+- 🧪 **Deterministic** – Pure helpers for server & test environments
 
 ## Installation
 
@@ -45,147 +46,137 @@ bun add next-navigation-utils
 ### Basic Usage
 
 ```tsx
-import { 
-  getQueryParamValue,    // Server-side searchParams
-  getSearchParamValue,   // Client-side URLSearchParams  
-  getLinkQueryValue,     // URL strings
-  encodeString, decodeString 
-} from 'next-navigation-utils'
+import {
+  getQueryParamValue,     // Server-side (props.searchParams)
+  getSearchParamValue,    // Client-side (URLSearchParams)
+  parseLink,              // String -> RelativeURL | URL
+const parsed = parseLink(raw) // RelativeURL
+  # next-navigation-utils
 
-const options = { name: 'category', decode: decodeString }
+  [![npm version](https://badge.fury.io/js/next-navigation-utils.svg)](https://badge.fury.io/js/next-navigation-utils)
+  [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
-// Server Component
-export default function Page({ searchParams }) {
-  const category = getQueryParamValue(searchParams, options)
-  return <h1>Category: {category}</h1>
-}
+  Concise, type‑safe URL parameter utilities for Next.js (server + client) plus a fluent link builder for relative & absolute URLs.
 
-// Client Component  
-'use client'
-import { useSearchParams } from 'next/navigation'
+  ## Install
+  ```bash
+  pnpm add next-navigation-utils
+  ```
 
-function Filter() {
-  const searchParams = useSearchParams()
-  const category = getSearchParamValue(searchParams, options)
-  return <div>Current: {category}</div>
-}
+  ## 10‑Second Example
+  ```tsx
+  import { getQueryParamValue, getSearchParamValue, parseLink, createLinker, createLinkerUrl, encodeString, decodeString } from 'next-navigation-utils'
+  const categoryParam = { name: 'category', encode: encodeString, decode: decodeString }
 
-// URL manipulation
-const category = getLinkQueryValue('/products?category=electronics', options)
-// Returns: 'electronics'
-```
+  // Server
+  export function Page({ searchParams }) {
+    const cat = getQueryParamValue(searchParams, categoryParam)
+    return <h1>{cat}</h1>
+  }
 
-### URL State Hook
+  // Client
+  'use client'
+  import { useSearchParams } from 'next/navigation'
+  function Cat() {
+    const sp = useSearchParams()
+    return <span>{getSearchParamValue(sp, categoryParam)}</span>
+  }
 
-```tsx
-'use client'
-import { useParamState, encodeString, decodeString } from 'next-navigation-utils'
+  // Raw string → new URL
+  const parsed = parseLink('/products?category=books')
+  const linker = parsed instanceof URL ? createLinkerUrl(parsed) : createLinker(parsed)
+  const nextUrl = linker.setValue(categoryParam, 'games').asString() // '/products?category=games'
+  ```
 
-function SearchInput() {
-  const [query, setQuery] = useParamState({
-    name: 'q',
-    encode: encodeString,
-    decode: decodeString
+  ## Encoders / Decoders
+  Built-ins: `encode/decodeString`, `encode/decodeNumber`, `encode/decodeBool (1/0)`, `encode/decodePage` (1-based, omits page 1).
+
+  ## API (Summary)
+  Value (server/client):
+  - `getQueryParamValue(queryObj, opt)` → T
+  - `setQueryParamValue(queryObj, opt, value)` → new query object
+  - `getSearchParamValue(urlSearchParams, opt)` → T
+  - `setSearchParamValue(urlSearchParams, opt, value)` → void (mutates)
+  - `queryToSearchParams(queryObj)` → URLSearchParams
+
+  Links & Builder:
+  - `parseLink(str)` → RelativeURL | URL
+  - `createRelativeLink(path, searchParams)` → RelativeURL
+  - `createLinker(relativeURL)` / `createLinkerUrl(URL)` → Linker
+  - `linker.getValue({name, decode})` → T
+  - `linker.setValue({name, encode}, value)` → chainable
+  - `linker.asString()` → string
+
+  Hooks:
+  - `useRelativeLink()` → current RelativeURL
+  - `useLinker()` → factory returning fresh Linker per invocation
+  - `useSearchParam(opt)` → current decoded value
+  - `useParamState(opt, { debounce=1000, updateValues? })` → `[value, setValue]` (debounced push + external sync)
+
+  Encoders/Decoders:
+  - `encodeString / decodeString`
+  - `encodeNumber / decodeNumber`
+  - `encodeBool / decodeBool`
+  - `encodePage / decodePage`
+
+  Types:
+  - `ParameterOptions<T>`
+  - `ParameterValueEncoder<T>` / `ParameterValueDecoder<T>`
+  - `QueryParameters`
+  - `RelativeURL` (`{ pathname; search; asString() }`)
+
+  ## `useParamState` Dependent Reset
+  ```tsx
+  import { useParamState, encodeString, decodeString, encodePage, decodePage } from 'next-navigation-utils'
+  const pageParam = { name: 'page', encode: encodePage, decode: decodePage }
+  const categoryParam = { name: 'category', encode: encodeString, decode: decodeString }
+  const [category, setCategory] = useParamState(categoryParam, {
+    updateValues: () => [ () => [pageParam, 1] ]
   })
-  
-  return (
-    <input
-      value={query || ''}
-      onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search..."
-    />
-  )
-  // URL automatically updates as user types (debounced)
-  // Component syncs when URL changes externally
-}
-```
+  ```
 
-## Core Concepts
+  ## Custom Encoder Example
+  ```ts
+  import type { ParameterValueEncoder, ParameterValueDecoder } from 'next-navigation-utils'
+  const encodeDate: ParameterValueEncoder<Date | null> = d => d ? d.toISOString() : null
+  const decodeDate: ParameterValueDecoder<Date | null> = v => v ? new Date(Array.isArray(v) ? v[0] : v) : null
+  ```
 
-### Encoder/Decoder Pattern
+  ## Migration (0.2.x → 1.x)
+  Replaced `getLinkQueryValue/setLinkQueryValue` with `parseLink + createLinker*`. Renamed `.toString()` → `.asString()`. Added `parseLink`, `createLinkerUrl`, `useRelativeLink`, `updateValues` (in `useParamState`).
+  ```diff
+  - const url = setLinkQueryValue('/products', p, 'books')
+  + const url = (parseLink('/products') instanceof URL
+  +   ? createLinkerUrl(parseLink('/products') as URL)
+  +   : createLinker(parseLink('/products') as any))
+  +   .setValue(p, 'books').asString()
+  ```
 
-All functions use consistent encode/decode options for type safety:
+  ## Requirements
+  Next.js 14+, React 18+, TS recommended.
 
+  ## License
+  MIT
+
+  ## Contributing
+  PRs welcome.
+
+  ## Changelog
+  See CHANGELOG.md.
 ```tsx
-const stringParam = {
-  name: 'category',
-  encode: encodeString,    // value → URL
-  decode: decodeString     // URL → value
-}
-
-// Use across all contexts
-const category1 = getQueryParamValue(searchParams, stringParam)      // Server
-const category2 = getSearchParamValue(useSearchParams(), stringParam) // Client
-const category3 = getLinkQueryValue(url, stringParam)                 // URL
+parseLink(str): RelativeURL | URL
+createLinker(relative: RelativeURL)
+createLinkerUrl(absolute: URL)
+createRelativeLink(pathname, searchParams)
 ```
 
-### Built-in Type Handlers
-
-```tsx
-import { 
-  encodeString, decodeString,     // string | null
-  encodeNumber, decodeNumber,     // number | null  
-  encodeBool, decodeBool,         // boolean | null
-  encodePage, decodePage          // number (1-based, defaults to 1)
-} from 'next-navigation-utils'
-
-// String parameters
-const category = getQueryParamValue(searchParams, {
-  name: 'category', 
-  decode: decodeString 
-})
-
-// Numeric parameters  
-const price = getQueryParamValue(searchParams, {
-  name: 'minPrice',
-  decode: decodeNumber
-})
-
-// Boolean parameters (encoded as '1'/'0')
-const inStock = getQueryParamValue(searchParams, {
-  name: 'inStock', 
-  decode: decodeBool
-})
-
-// Page numbers (defaults to 1 if missing)
-const page = getQueryParamValue(searchParams, {
-  name: 'page',
-  decode: decodePage
-})
+Linker API:
+```ts
+linker.getLink(): RelativeURL | URL
+linker.asString(): string
+linker.getValue({ name, decode }): T
+linker.setValue({ name, encode }, value) // chainable builder
 ```
-
-## API Reference
-
-### Core Functions
-
-#### Server-side (`searchParams` object)
-
-```tsx
-getQueryParamValue(searchParams, options): T
-setQueryParamValue(searchParams, options, value): void
-```
-
-#### Client-side (`URLSearchParams`)
-
-```tsx  
-getSearchParamValue(urlSearchParams, options): T
-setSearchParamValue(urlSearchParams, options, value): void
-```
-
-#### URL Strings
-
-```tsx
-getLinkQueryValue(url, options): T  
-setLinkQueryValue(url, options, value): string
-```
-
-#### Bridge Function
-
-```tsx
-queryToSearchParams(searchParams): URLSearchParams
-```
-
-Converts server-side `searchParams` to `URLSearchParams` for client compatibility.
 
 ### React Hooks
 
@@ -217,12 +208,14 @@ const [value, setValue] = useParamState({
 - Debounced URL updates to prevent excessive navigation
 - External URL changes automatically sync to component state
 
-#### `useCurrentLink()`
+#### `useRelativeLink()`
 
-Get current page URL as string:
-
+Structured snapshot of current route.
 ```tsx
-const currentUrl = useCurrentLink() // '/products?category=electronics'
+const link = useRelativeLink()
+link.pathname
+link.search // ReadonlyURLSearchParams
+link.asString()
 ```
 
 #### `useLinker()`
@@ -234,22 +227,27 @@ const linker = useLinker()
 const newUrl = linker()
   .setValue({ name: 'sort', encode: encodeString }, 'price')
   .setValue({ name: 'page', encode: encodeNumber }, 1)
-  .toString()
+  .asString()
 ```
 
-### URL Builder
-
-#### `createLinker(url)`
-
-Create a URL builder for any URL:
+### URL Builder (Fluent)
 
 ```tsx
-const builder = createLinker('/products')
-const newUrl = builder
-  .setValue({ name: 'category', encode: encodeString }, 'electronics')
-  .setValue({ name: 'page', encode: encodeNumber }, 2)
-  .toString() // '/products?category=electronics&page=2'
+import { parseLink, createLinker, createLinkerUrl, encodeString, encodeNumber, decodeString } from 'next-navigation-utils'
+
+const raw = '/products?category=electronics'
+const parsed = parseLink(raw)
+const linker = parsed instanceof URL ? createLinkerUrl(parsed) : createLinker(parsed)
+
+const currentCategory = linker.getValue({ name: 'category', decode: decodeString })
+
+const nextUrl = linker
+  .setValue({ name: 'category', encode: encodeString }, 'books')
+  .setValue({ name: 'page', encode: encodeNumber }, 3)
+  .asString() // '/products?category=books&page=3'
 ```
+
+Chaining produces an immutable builder; call `asString()` at the end.
 
 ## Real-World Patterns
 
@@ -305,7 +303,7 @@ export function ClientFilters({ searchParams }) {
     const url = linker()
       .setValue({ name: 'category', encode: encodeString }, newCategory)
       .setValue({ name: 'page', encode: encodeNumber }, 1) // Reset pagination
-      .toString()
+      .asString()
     router.push(url)
   }
   
@@ -496,7 +494,7 @@ export function CategoryFilter() {
     const url = linker()
       .setValue(categoryParam, newCategory)
       .setValue(pageParam, 1) // Reset to page 1
-      .toString()
+      .asString()
     router.push(url)
   }
   
@@ -557,7 +555,7 @@ function ProductFilters({ searchParams }: { searchParams: URLSearchParams }) {
     const newUrl = linker()
       .setValue({ name: 'category', encode: encodeString }, value)
       .setValue({ name: 'page', encode: encodePage }, 1) // Reset pagination
-      .toString()
+      .asString()
     router.push(newUrl)
   }
 
@@ -725,18 +723,43 @@ function SearchWithFilters() {
 
 ## Requirements
 
-- **Next.js**: 14.0+ or 15.0+
-- **React**: 18.0+ or 19.0+
-- **TypeScript**: Recommended for full type safety
+- Next.js 14+ / 15+
+- React 18+ / 19+
+- TypeScript (recommended)
+
+## Migration Guide (0.2.x → 1.x)
+
+Changes:
+- Removed: `getLinkQueryValue` / `setLinkQueryValue` → use `parseLink` + `createLinker*`
+- Removed: `useCurrentLink` → use `useRelativeLink`
+- Renamed: `.toString()` → `.asString()` (prevents accidental implicit coercion)
+- Added: `parseLink`, `createLinkerUrl`, `useRelativeLink`
+- Enhanced: `useParamState` now supports `updateValues`
+
+Example migration:
+```diff
+- const url = setLinkQueryValue('/products', categoryParam, 'books')
+- const value = getLinkQueryValue(url, categoryParam)
++ const link = parseLink('/products')
++ const linker = link instanceof URL ? createLinkerUrl(link) : createLinker(link)
++ const url = linker.setValue(categoryParam, 'books').asString()
++ const value = linker.getValue({ name: 'category', decode: decodeString })
+```
+
+Dependent reset:
+```tsx
+const pageParam = { name: 'page', encode: encodePage, decode: decodePage }
+const categoryParam = { name: 'category', encode: encodeString, decode: decodeString }
+const [category, setCategory] = useParamState(categoryParam, {
+  updateValues: () => [ () => [pageParam, 1] ]
+})
+```
 
 ## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+See CONTRIBUTING.md.
 
 ## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License – see LICENSE.
 
 ## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
+See CHANGELOG.md.

@@ -28,6 +28,12 @@
       ],
       "@/dist-lib": [
         "../dist/index"
+      ],
+      "@/dist-lib/client": [
+        "../dist/client"
+      ],
+      "@/dist-lib/parameters": [
+        "../dist/parameters"
       ]
     }
   },

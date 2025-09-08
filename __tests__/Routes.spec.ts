@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test'
-import queryToSearchParams from '../src/utils/queryToSearchParams'
-import {createLinkerUrl,parseLink,createLinker} from '@/dist-lib'
+import {createLinkerUrl,parseLink,createLinker,queryToSearchParams} from '@/dist-lib'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
   page.on('console', msg => console.log(msg.text()));
@@ -72,7 +71,7 @@ test('useParamState hook - URL state synchronization with debouncing', async ({ 
   ).toHaveValue('text_updated_from_external_router')
 })
 
-test('linker',   ()=>{
+test('linker',   async ({page})=>{
   const ss = parseLink('/some-pathname?param1=1')
   const builder =  ss instanceof URL ? createLinkerUrl(ss) : createLinker(ss)
    expect(builder.asString()).toBe('/some-pathname?param1=1')

@@ -3,7 +3,12 @@
     "module": "esnext",
     "jsx": "react-jsx",
     "target": "ESNext",
-    "lib": ["es6", "es7", "esnext", "dom"],
+    "lib": [
+      "es6",
+      "es7",
+      "esnext",
+      "dom"
+    ],
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "strict": true,
@@ -28,6 +33,13 @@
     "outDir": "dist",
     "noEmit": false,
     "emitDeclarationOnly": false,
+    "paths": {
+      "@/dist-lib": [
+        "./dist"
+      ],
+    }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
 }

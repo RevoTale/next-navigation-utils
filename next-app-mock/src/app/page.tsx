@@ -1,6 +1,4 @@
-import decodeString from "../../../src/common/decodeString"
-import getQueryParamValue from "../../../src/query/getQueryParamValue"
-import {QueryParameters} from "../../../src"
+import {decodeString,getQueryParamValue,QueryParameters} from "@/dist-lib"
 
 const Page = async ({searchParams}:{searchParams:Promise<QueryParameters>}) => {
     const value = getQueryParamValue(await searchParams,{

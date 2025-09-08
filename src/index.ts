@@ -1,4 +1,3 @@
-// noinspection JSUnusedGlobalSymbols
 
 
 export {default as getQueryParamValue} from './query/getQueryParamValue'
@@ -15,10 +14,10 @@ export {default as parseLink} from './utils/parseLink'
 export {default as queryToSearchParams} from './utils/queryToSearchParams'
 
 
-export {default as useParamState} from './state/useParamState'
 export {default as useRelativeLink} from './hooks/useRelativeLink'
 export {default as useLinker} from './hooks/useLinker'
 export {default as useSearchParam} from './hooks/useSearchParam'
+export {default as useParamState} from './state/useParamState'
 
 export {default as decodeBool} from './common/decodeBool'
 export {default as encodeBool} from './common/encodeBool'

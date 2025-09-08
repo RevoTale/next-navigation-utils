@@ -1,5 +1,5 @@
 'use client'
-import { decodeString, encodeString, useParamState } from "@/dist-lib";
+import { decodeString, encodeString, useParamState } from "@/dist-lib"
 import { useRouter, useSearchParams } from "next/navigation";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 

@@ -1,3 +1,4 @@
+'use client'
 import {useSearchParams} from "next/navigation"
 import getSearchParamValue from "../searchParams/getSearchParamValue"
 import type {ParameterOptions} from "../types"

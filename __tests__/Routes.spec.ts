@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import {createLinkerUrl,parseLink,createLinker,queryToSearchParams} from '@/dist-lib'
+import { createLinkerUrl, parseLink, createLinker, queryToSearchParams } from '../src/index'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
   page.on('console', msg => console.log(msg.text()));

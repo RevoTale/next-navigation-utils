@@ -1,8 +1,8 @@
 'use client'
-import { decodeString, encodeString, useParamState } from "@/dist-lib"
+import { decodeString, encodeString,  } from "@/dist-lib"
 import { useRouter, useSearchParams } from "next/navigation";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-
+import { useParamState } from "@/dist-lib/client";
 const Form:FunctionComponent = ()=>{
   const [value,setValue]  = useParamState({
     encode:encodeString,

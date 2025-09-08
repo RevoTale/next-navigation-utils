@@ -1,6 +1,6 @@
 'use client'
-import {useLinker,useRelativeLink,encodeBool,decodeString} from "@/dist-lib"
-
+import {encodeBool,decodeString} from "@/dist-lib"
+import {useLinker,useRelativeLink,} from "@/dist-lib/client"
 const CurrentUrlBlock = () => {
     const currentUrl = useRelativeLink()
     const link = useLinker()

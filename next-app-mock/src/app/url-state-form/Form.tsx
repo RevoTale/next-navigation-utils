@@ -1,12 +1,11 @@
 'use client'
-import { decodeString, encodeString,  } from "@/dist-lib"
+import { stringType  } from "@/dist-lib/parameters"
 import { useRouter, useSearchParams } from "next/navigation";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useParamState } from "@/dist-lib/client";
 const Form:FunctionComponent = ()=>{
   const [value,setValue]  = useParamState({
-    encode:encodeString,
-    decode:decodeString,
+  ...stringType,
     name:'url_change_test_input_value'
   })
   const router = useRouter()

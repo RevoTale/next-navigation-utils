@@ -26,6 +26,11 @@
         "import": "./client/index.js",
         "require": "./client/index.cjs",
         "types": "./client/index.d.ts"
+      },
+      "./parameters": {
+        "import": "./parameters/index.js",
+        "require": "./parameters/index.cjs",
+        "types": "./parameters/index.d.ts"
       }
     }
   },

@@ -13,18 +13,8 @@ export {default as createLinkerUrl} from './utils/createLinkerUrl'
 export {default as parseLink} from './utils/parseLink'
 export {default as queryToSearchParams} from './utils/queryToSearchParams'
 
-export {default as decodeBool} from './common/decodeBool'
-export {default as encodeBool} from './common/encodeBool'
-
-export {default as decodeString} from './common/decodeString'
-export {default as encodeString} from './common/encodeString'
-
-
-export {default as decodeNumber} from './common/decodeNumber'
-export {default as encodeNumber} from './common/encodeNumber'
-
-export {default as decodePage} from './common/decodePage'
-export {default as encodePage} from './common/encodePage'
+export {default as makeParamType} from './utils/makeParamType'
+export {default as makeParam} from './utils/makeParam'
 export type {
     QueryParameters,
     QueryParameterValue,

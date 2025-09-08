@@ -11,12 +11,12 @@ export interface ParameterValueCoderOptions<T> {
     encode: ParameterValueEncoder<T>
 }
 export type ParameterOptions<T> = {
-    name: string
+     name: string
 } & ParameterValueCoderOptions<T>
 export type RelativePathname = `/${string}` | ''
 
 export interface RelativeURL {
-    pathname: RelativePathname
-    search: ReadonlyURLSearchParams|URLSearchParams
-    asString: () => string
+   readonly pathname: RelativePathname
+   readonly search: ReadonlyURLSearchParams|URLSearchParams
+   readonly asString: () => string
 }

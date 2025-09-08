@@ -10,7 +10,7 @@ export interface Linker<T extends RelativeURL> {
     getLink: () => T
     asString: () => string
 }
-interface LinkBuilder {
+export interface LinkBuilder {
     setValue:  SetValueCallback
     getLink: () => RelativeURL
     asString:()=>string

@@ -1,5 +1,5 @@
 import createRelativeLink from "./createRelativeLink";
-import type { RelativeURL } from "../types"
+import type {  RelativeURL } from "../types"
 
 const parseLink = (link:string):RelativeURL|URL=>{
    try {

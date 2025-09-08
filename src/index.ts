@@ -1,7 +1,5 @@
 // noinspection JSUnusedGlobalSymbols
 
-export {default as getLinkQueryValue} from './link/getLinkQueryValue'
-export {default as setLinkQueryValue} from './link/setLinkQueryValue'
 
 export {default as getQueryParamValue} from './query/getQueryParamValue'
 export {default as setQueryParamValue} from './query/setQueryParamValue'
@@ -11,6 +9,7 @@ export {default as setSearchParamValue} from './searchParams/setSearchParamValue
 
 export {default as createRelativeLink} from './utils/createRelativeLink'
 export {default as createLinker} from './utils/createLinker'
+export {default as createLinkerUrl} from './utils/createLinkerUrl'
 
 export {default as parseLink} from './utils/parseLink'
 export {default as queryToSearchParams} from './utils/queryToSearchParams'

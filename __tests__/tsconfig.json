@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "@/dist-lib": [
+                "../dist/index"
+            ]
+        }
+    }
+}

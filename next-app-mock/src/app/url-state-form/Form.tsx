@@ -27,7 +27,7 @@ const Form:FunctionComponent = ()=>{
         }} value={value??''}></input>
         <div data-testid="url_change_time">{countSearchParamsChanged}</div>
         <button data-testid="change_url_button" onClick={() => {
-          router.push('/url-state-form?url_change_test_input_value=text_updated_from_external_router')
+          router.push('/url-state-form?url_change_test_input_value=text_updated_from_nextjs_router')
         }}>Change URL</button>
     </div>
 }

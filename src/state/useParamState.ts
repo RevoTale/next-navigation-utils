@@ -3,9 +3,10 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import type { ParameterOptions, RelativeURL } from "../types"
 import {useDebouncedCallback} from 'use-debounce'
-import useLinker from "../hooks/useLinker"
 import useSearchParam from "../hooks/useSearchParam"
 import type { LinkBuilder, Linker } from "../utils/createLinker"
+import { useRelativeLink } from "../client"
+import createLinker from "../utils/createLinker"
 type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
 export type UpdateValueCallback =  <T,>() => [Pick<ParameterOptions<T>, 'name' | 'encode'>,T]
@@ -18,12 +19,12 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
     updateValues
 }:ParamsStateOptions={}):[T,SetStateCallback<T>]=>{
     const router =  useRouter()
-    const linker = useLinker()
+    const link = useRelativeLink()
     const queryValue =  useSearchParam(params)
     const [value,setValue] = useState<T>(queryValue)
 
     const updateQueryValue = useDebouncedCallback((value:T)=>{
-        const linkBuilder = linker()
+        const linkBuilder = createLinker(link)
 
         const updatedLink = linkBuilder.setValue(params,value)
         const valuesToUpdate  = updateValues === undefined?[]:updateValues(updatedLink,linkBuilder)
@@ -34,14 +35,12 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         }, updatedLink).getLink()).asString())
     },debounce)
     useEffect(()=>{ 
-        const builder =  linker()
-        const currentLink = builder.asString()
-        const inputValueURL = builder.setValue(params,value).asString();
-
+        const currentLink = link.asString()
+        const inputValueURL = createLinker(link).setValue(params,value).asString();
         if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
             setValue(queryValue)
         }
-    },[debounce, linker,queryValue,value])
+    },[debounce, link,queryValue,value])
 
     return [value,(value:T)=>{
         setValue(value)

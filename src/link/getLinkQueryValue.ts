@@ -2,6 +2,7 @@
 import type {ParameterOptions, RelativeURL} from "../types"
 import parseLink from '../utils/parseLink';
 import createLinker from '../utils/createLinker';
+import createLinkerUrl from "../utils/createLinkerUrl";
 type Opts<T,> = Pick<ParameterOptions<T>,'decode'|'name'>
 function getLinkQueryValue<T>(
     link: RelativeURL,
@@ -23,7 +24,7 @@ function getLinkQueryValue<T>(
 	{name, decode}: Opts<T>
 ): T {
     const parsed =  typeof link === 'string'?parseLink(link):link;
-    const linker = createLinker(parsed)
+    const linker = parsed instanceof URL?createLinkerUrl(  parsed):createLinker(parsed)
     return linker.getValue({name,decode});
 	
 }

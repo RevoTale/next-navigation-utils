@@ -7,11 +7,12 @@ export interface Linker<T extends URL> {
     setValue: SetValueCallback,
     getValue: GetValueCallback,
     getLink: () => T
-    toString: () => string
+    asString: () => string
 }
 interface LinkBuilder {
     setValue:  SetValueCallback
     getLink: () => URL
+    asString:()=>string
 }
 
   
@@ -31,7 +32,8 @@ const startBuilder = (url:URL):LinkBuilder=>{
                     newURL.searchParams.append(key, value)
                 })
                 return newURL
-            }
+            },
+            asString:()=>builder.getLink().toString()
         }
         return builder
 }
@@ -46,7 +48,7 @@ const createLinker = (link: URL): Linker<URL> => {
         setValue:(param,value)=>startBuilder(link).setValue(param,value),
         getValue,
         getLink:()=>link,
-        toString
+        asString:()=>linker.getLink().toString()
     }
     return linker
 }

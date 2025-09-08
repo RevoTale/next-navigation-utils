@@ -9,7 +9,7 @@ const createRelativeLink = (pathname:  string, search: URLSearchParams): Relativ
         return ({
                 pathname,
                 search,
-                toString: () => `${pathname}${getNormalizedQueryStr(search)}`
+                asString: () => `${pathname}${getNormalizedQueryStr(search)}`
             })
     }
     throw new Error(`Invalid path: ${pathname}`);

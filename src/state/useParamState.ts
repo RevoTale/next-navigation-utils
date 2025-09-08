@@ -26,13 +26,12 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         if (undefined !== modifyState) {
             modifyState(builder)
         }
-        router.push((builder.getLink()).toString())
+        router.push((builder.getLink()).asString())
     },debounce)
     useEffect(()=>{
         const builder =  linker()
-        const currentLink = builder.toString()
-        builder.setValue(params,value)
-        const inputValueURL =builder.toString();
+        const currentLink = builder.asString()
+        const inputValueURL = builder.setValue(params,value).asString();
 
         if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
             setValue(queryValue)

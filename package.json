@@ -37,6 +37,7 @@
     "prepare": "pnpm build",
     "test": "pnpm lint && pnpm tsc && pnpm unit",
     "unit": "playwright test -x",
+    "unit:stage":"pnpm build && pnpm unit",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

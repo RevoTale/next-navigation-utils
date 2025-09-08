@@ -234,7 +234,7 @@ const linker = useLinker()
 const newUrl = linker()
   .setValue({ name: 'sort', encode: encodeString }, 'price')
   .setValue({ name: 'page', encode: encodeNumber }, 1)
-  .toString()
+  .asString()
 ```
 
 ### URL Builder
@@ -248,7 +248,7 @@ const builder = createLinker('/products')
 const newUrl = builder
   .setValue({ name: 'category', encode: encodeString }, 'electronics')
   .setValue({ name: 'page', encode: encodeNumber }, 2)
-  .toString() // '/products?category=electronics&page=2'
+  .asString() // '/products?category=electronics&page=2'
 ```
 
 ## Real-World Patterns
@@ -305,7 +305,7 @@ export function ClientFilters({ searchParams }) {
     const url = linker()
       .setValue({ name: 'category', encode: encodeString }, newCategory)
       .setValue({ name: 'page', encode: encodeNumber }, 1) // Reset pagination
-      .toString()
+      .asString()
     router.push(url)
   }
   
@@ -496,7 +496,7 @@ export function CategoryFilter() {
     const url = linker()
       .setValue(categoryParam, newCategory)
       .setValue(pageParam, 1) // Reset to page 1
-      .toString()
+      .asString()
     router.push(url)
   }
   
@@ -557,7 +557,7 @@ function ProductFilters({ searchParams }: { searchParams: URLSearchParams }) {
     const newUrl = linker()
       .setValue({ name: 'category', encode: encodeString }, value)
       .setValue({ name: 'page', encode: encodePage }, 1) // Reset pagination
-      .toString()
+      .asString()
     router.push(newUrl)
   }
 

@@ -18,5 +18,5 @@ export type RelativePathname = `/${string}` | ''
 export interface RelativeURL {
     pathname: RelativePathname
     search: ReadonlyURLSearchParams|URLSearchParams
-    toString: () => string
+    asString: () => string
 }

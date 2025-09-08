@@ -4,6 +4,8 @@ import createLinker from '../src/utils/createLinker'
 import parseLink from '../src/utils/parseLink'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
+  page.on('console', msg => console.log(msg.text()));
+
   await page.goto('/')
   await expect(page).toHaveURL('/')
   

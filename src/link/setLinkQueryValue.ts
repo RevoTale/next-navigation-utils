@@ -1,6 +1,7 @@
 import type {ParameterOptions, RelativeURL} from "../types"
 import parseLink from "../utils/parseLink";
 import createLinker from "../utils/createLinker";
+import createLinkerUrl from "../utils/createLinkerUrl";
 
 function setLinkQueryValue<T>(
     link: URL,
@@ -25,8 +26,8 @@ function setLinkQueryValue<T>(
     value: T
 ): URL|RelativeURL {
 
-    const parsed =  link instanceof URL?link:parseLink(link);
-    const linker = createLinker(parsed)
+    const parsed =  typeof link === 'string'?parseLink(link):link;
+    const linker = parsed instanceof URL?createLinkerUrl(  parsed):createLinker(parsed)
     linker.setValue(opts,value);
     return linker.getLink();
 }

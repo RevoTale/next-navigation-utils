@@ -1,5 +1,31 @@
 # next-navigation-utils
 
+## 1.0.0
+
+### Major Changes
+
+- 378be80: Make `setLinkQueryValue` function support any input. Implement a universal parser for any type of the link input. It auto converts them to the right type.
+
+### Minor Changes
+
+- 171c185: Completely remove the 'querystring' usage. Greatefuly reduced bundle size.
+- da1a4c8: Refactor parameres encode/decode function to the parameter type and add as a separate namespace for better tree shaking.
+- 96973cc: This release has many breaking change.
+  - Renamed hooks and utilites to match features they do better
+  - Rethink and rewrite from scrach the way links are being built to simplify their usage.
+  - Rewrite from scratch some function to have much better performence and reduce unnecessary calculations
+  - Make the separation between the passed URL and "route pathname + query string" to avoid the consfuse while building the links in the web application. Prepare for the strictly typed next.js routes
+  - Add memoization of the hooks and objects
+- 774b094: Redesign utilities to avoid collisions of the globals, add more tests, redesign untility to be immutable where possible without perform ance drawback
+
+### Patch Changes
+
+- 171c185: Make `getLinkQueryValue` and `setLinkQueryValue` to support any input type.
+- 774b094: Drop link updater because it useless in a new system
+- da1a4c8: Add `makeParam` and other tiny utilities to improve the developer experience.
+- f6902cf: Add hook to handle values reset
+- 4b7b203: Separation of the shared and client only utilities
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,4 @@
-packages:
-  - next-app-mock
+
 
 onlyBuiltDependencies:
   - esbuild

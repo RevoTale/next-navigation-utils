@@ -1,5 +1,5 @@
 ---
-"next-app-mock": minor
+"next-navigation-utils": minor
 ---
 
 Refactor parameres encode/decode function to the parameter type and add as a separate namespace for better tree shaking.

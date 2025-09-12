@@ -27,6 +27,10 @@ export interface ParameterOptions<T,> extends ParameterValueCoderOptions<T> {
 export interface ValuedParameter<T> extends ParameterOptions<T> {
     value: T
 }
+export interface ParamsStateOptions {
+    debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
+    updateValue?: (link: RelativeLinkBuilder, source: Linker<RelativeURL>) =>RelativeLinkBuilder
+}
 export type RelativePathname = `/${string}` | ''
 
 export interface RelativeURL {

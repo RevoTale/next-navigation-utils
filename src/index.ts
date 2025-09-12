@@ -15,11 +15,4 @@ export {default as queryToSearchParams} from './utils/queryToSearchParams'
 
 export {default as makeParamType} from './utils/makeParamType'
 export {default as makeParam} from './utils/makeParam'
-export type {
-    QueryParameters,
-    QueryParameterValue,
-    ParameterValueDecoder,
-    ParameterValueEncoder,
-    ParameterValueCoderOptions,
-    ParameterOptions
-} from './types'
+export type * from './types'

@@ -1,3 +1,5 @@
+import { ParameterOptions } from "@/dist-lib";
+import { pageType } from "@/dist-lib/parameters";
 import { FunctionComponent } from "react";
 
 const Page:FunctionComponent =()=>{

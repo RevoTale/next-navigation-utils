@@ -1,23 +1,20 @@
 'use client'
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import type { ParameterOptions, RelativeURL } from "../types"
+import type {  ParameterOptions, ParamsStateOptions} from "../types"
 import {useDebouncedCallback} from 'use-debounce'
-import useSearchParam from "../hooks/useSearchParam"
-import type { LinkBuilder, Linker } from "../utils/createLinker"
+import useSearchParam from "../client/useSearchParam"
 import { useRelativeLink } from "../client"
 import createLinker from "../utils/createLinker"
-type SetStateCallback<T,> = (value:T)=>void
+export type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
-export type UpdateValueCallback =  <T,>() => [Pick<ParameterOptions<T>, 'name' | 'encode'>,T]
-interface ParamsStateOptions {
-    debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
-    updateValues?: (modified: LinkBuilder,source:Linker<RelativeURL>) => UpdateValueCallback[] // Usage example: page reset when selecting the search form filter values
-}
-const useParamState=<T,>(params:ParameterOptions<T>,{
+ 
+
+
+const useParamState = <T>(params: ParameterOptions<T>, {
     debounce = defaultDebounceTimer,
-    updateValues
-}:ParamsStateOptions={}):[T,SetStateCallback<T>]=>{
+    updateValue
+}: ParamsStateOptions = {}): [T, SetStateCallback<T>] => {
     const router =  useRouter()
     const link = useRelativeLink()
     const queryValue =  useSearchParam(params)
@@ -27,12 +24,10 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         const linkBuilder = createLinker(link)
 
         const updatedLink = linkBuilder.setValue(params,value)
-        const valuesToUpdate  = updateValues === undefined?[]:updateValues(updatedLink,linkBuilder)
-        
-        router.push((valuesToUpdate.reduce((link,entry)=>{
-            const [param,value] = entry()
-            return link.setValue(param,value)
-        }, updatedLink).getLink()).asString())
+        const valueMiddleware  = updateValue === undefined?updatedLink:updateValue(updatedLink,linkBuilder)
+
+        router.push(valueMiddleware.getLink().asString())
+
     },debounce)
     useEffect(()=>{ 
         const currentLink = link.asString()
@@ -47,4 +42,5 @@ const useParamState=<T,>(params:ParameterOptions<T>,{
         updateQueryValue(value)
     }]
 }
+
 export default useParamState

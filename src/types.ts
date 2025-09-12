@@ -10,13 +10,39 @@ export interface ParameterValueCoderOptions<T> {
     decode: ParameterValueDecoder<T>
     encode: ParameterValueEncoder<T>
 }
-export type ParameterOptions<T> = {
+export interface Linker<T extends URL|RelativeURL> {
+    setValue: SetValueCallback<T>,
+    getValue: GetValueCallback,
+    getLink: () => T
+    asString: () => string
+}
+export interface AbsoltuteLinkBuilder {
+    setValue:  SetValueCallback<URL>
+    getLink: () => URL
+    asString:()=>string
+}
+export interface ParameterOptions<T,> extends ParameterValueCoderOptions<T> {
      name: string
-} & ParameterValueCoderOptions<T>
+}
+export interface ValuedParameter<T> extends ParameterOptions<T> {
+    value: T
+}
+export interface ParamsStateOptions {
+    debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
+    updateValue?: (link: RelativeLinkBuilder, source: Linker<RelativeURL>) =>RelativeLinkBuilder
+}
 export type RelativePathname = `/${string}` | ''
 
 export interface RelativeURL {
    readonly pathname: RelativePathname
    readonly search: ReadonlyURLSearchParams|URLSearchParams
    readonly asString: () => string
+}
+export type SetValueCallback<R extends URL|RelativeURL,N = R extends URL?AbsoltuteLinkBuilder:RelativeLinkBuilder> =  <T>(opt: Pick<ParameterOptions<T>, 'name' | 'encode'>, value: T) => N
+export type GetValueCallback = <V>(opt: Pick<ParameterOptions<V>, 'name' | 'decode'>) => V
+
+export interface RelativeLinkBuilder {
+    setValue:  SetValueCallback<RelativeURL>
+    getLink: () => RelativeURL
+    asString:()=>string
 }

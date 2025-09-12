@@ -7,10 +7,10 @@ import useSearchParam from "../hooks/useSearchParam"
 import type { LinkBuilder, Linker } from "../utils/createLinker"
 import { useRelativeLink } from "../client"
 import createLinker from "../utils/createLinker"
-type SetStateCallback<T,> = (value:T)=>void
+export type SetStateCallback<T,> = (value:T)=>void
 const defaultDebounceTimer = 1000
 export type UpdateValueCallback =  <T,>() => [Pick<ParameterOptions<T>, 'name' | 'encode'>,T]
-interface ParamsStateOptions {
+export interface ParamsStateOptions {
     debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
     updateValues?: (modified: LinkBuilder,source:Linker<RelativeURL>) => UpdateValueCallback[] // Usage example: page reset when selecting the search form filter values
 }

@@ -10,29 +10,29 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.cjs"
+    },
+    "./client": {
+      "types": "./client.d.ts",
+      "import": "./client.js",
+      "require": "./client.cjs"
+    },
+    "./parameters": {
+      "types": "./parameters/index.d.ts",
+      "import": "./parameters/index.js",
+      "require": "./parameters/index.cjs"
+    }
+  },
   "publishConfig": {
     "provenance": true,
     "access": "public",
     "main": "index.js",
-    "directory": "dist",
-    "exports": {
-      "./package.json": "./package.json",
-      ".": {
-        "import": "./index.js",
-        "require": "./index.cjs",
-        "types": "./index.d.ts"
-      },
-      "./client": {
-        "import": "./client/index.js",
-        "require": "./client/index.cjs",
-        "types": "./client/index.d.ts"
-      },
-      "./parameters": {
-        "import": "./parameters/index.js",
-        "require": "./parameters/index.cjs",
-        "types": "./parameters/index.d.ts"
-      }
-    }
+    "directory": "dist"
   },
   "repository": {
     "type": "git",

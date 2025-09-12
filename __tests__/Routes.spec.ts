@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { createLinkerUrl, parseLink, createLinker, queryToSearchParams } from '../src/index'
+import parseRelativeLink from '../src/utils/parseRelativeLink'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
 
@@ -108,7 +109,16 @@ test('useParamState hook - URL state synchronization with debouncing', async ({ 
 
 test('linker',    ()=>{
   const ss = parseLink('/some-pathname?param1=1')
-  const builder =  ss instanceof URL ? createLinkerUrl(ss) : createLinker(ss)
+  if (ss instanceof URL) {
+    throw new Error('The link is URL')
+  }
+  const builder = createLinker(ss)
    expect(builder.asString()).toBe('/some-pathname?param1=1')
     expect(builder.getLink()).toEqual(ss)
+
+    expect(parseRelativeLink('/some-pathname?param1=1').asString()).toEqual(ss.asString())
+    expect(() => parseRelativeLink('https://example.com/some-pathname?param1=1')).toThrowError('The link is URL')
+    expect(() => parseRelativeLink('ftp://example.com/some-pathname?param1=1')).toThrowError('The link is URL')
+    expect(parseRelativeLink('ss/dd').asString()).toBe('/ss/dd')
+     expect(parseRelativeLink('').asString()).toBe('/')
 })

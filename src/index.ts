@@ -12,7 +12,7 @@ export {default as createLinkerUrl} from './utils/createLinkerUrl'
 
 export {default as parseLink} from './utils/parseLink'
 export {default as queryToSearchParams} from './utils/queryToSearchParams'
-
+export {default as makeRelativeLink} from './utils/parseRelativeLink'
 export {default as makeParamType} from './utils/makeParamType'
 export {default as makeParam} from './utils/makeParam'
 export type * from './types'

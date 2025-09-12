@@ -10,9 +10,12 @@ export interface ParameterValueCoderOptions<T> {
     decode: ParameterValueDecoder<T>
     encode: ParameterValueEncoder<T>
 }
-export type ParameterOptions<T> = {
+export interface ParameterOptions<T,> extends ParameterValueCoderOptions<T> {
      name: string
-} & ParameterValueCoderOptions<T>
+}
+export interface ValuedParameter<T> extends ParameterOptions<T> {
+    value: T
+}
 export type RelativePathname = `/${string}` | ''
 
 export interface RelativeURL {

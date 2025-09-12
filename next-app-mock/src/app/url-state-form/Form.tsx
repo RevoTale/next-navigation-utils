@@ -3,7 +3,7 @@ import { pageType, stringType  } from "@/dist-lib/parameters"
 import { useRouter, useSearchParams } from "next/navigation";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useParamState } from "@/dist-lib/client";
-import { ParameterOptions } from "../../../../dist/types";
+import { ParameterOptions, ValuedParameter } from "../../../../dist/types";
 import { encode } from "querystring";
 const pageParams:ParameterOptions<number> = {
     name:'page',
@@ -14,15 +14,14 @@ const Form:FunctionComponent = ()=>{
   const [value,setValue]  = useParamState({
   ...stringType,
     name:'url_change_test_input_value',
-    
   },{
-    updateValues(modified, source) {
-      return isResetPage?[()=>{
-        name:'page',
-        encode:pageParams.encode
-      },1]:[]
+    updateValue: (link) =>{
+      if (isResetPage) {
+        link.setValue(pageParams,1)
+      }
+      return link
     },
-  })
+  }) //This tests `updateValues` type safey. It cause a bad developer experience, so keep it to prrof that type afety works without ny issues for the developer
    const [page,setPage] = useParamState(pageParams,)
   const router = useRouter()
   const [countSearchParamsChanged,setCountSearchParamsChanged] = useState(0)

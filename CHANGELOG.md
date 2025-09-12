@@ -1,5 +1,12 @@
 # next-navigation-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- 221c5af: Fix the wrong client component export
+- 1dcad18: Add helper utility for parsing the relative link.
+
 ## 1.0.1
 
 ### Patch Changes

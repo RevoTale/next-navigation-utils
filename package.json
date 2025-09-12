@@ -4,7 +4,7 @@
     "email": "l-you@revotale.com",
     "url": "https://github.com/l-you"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "next-navigation-utils",
   "main": "src/index.ts",
   "license": "MIT",

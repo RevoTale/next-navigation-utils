@@ -1,4 +1,4 @@
-export {default as useRelativeLink} from './hooks/useRelativeLink'
-export {default as useLinker} from './hooks/useLinker'
-export {default as useSearchParam} from './hooks/useSearchParam'
+export {default as useRelativeLink} from './client/useRelativeLink'
+export {default as useLinker} from './client/useLinker'
+export {default as useSearchParam} from './client/useSearchParam'
 export {default as useParamState} from './state/useParamState'

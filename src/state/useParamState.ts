@@ -1,10 +1,9 @@
 'use client'
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import type { ParameterOptions, RelativeURL } from "../types"
+import type { Linker, ParameterOptions, RelativeLinkBuilder, RelativeURL } from "../types"
 import {useDebouncedCallback} from 'use-debounce'
-import useSearchParam from "../hooks/useSearchParam"
-import type { LinkBuilder, Linker } from "../utils/createLinker"
+import useSearchParam from "../client/useSearchParam"
 import { useRelativeLink } from "../client"
 import createLinker from "../utils/createLinker"
 export type SetStateCallback<T,> = (value:T)=>void
@@ -13,7 +12,7 @@ const defaultDebounceTimer = 1000
 
 export interface ParamsStateOptions {
     debounce?: number //Default 1000ms. Interval after shich state is being commited to the url.
-    updateValue?: (link: LinkBuilder, source: Linker<RelativeURL>) =>LinkBuilder
+    updateValue?: (link: RelativeLinkBuilder, source: Linker<RelativeURL>) =>RelativeLinkBuilder
 }
 const useParamState = <T>(params: ParameterOptions<T>, {
     debounce = defaultDebounceTimer,

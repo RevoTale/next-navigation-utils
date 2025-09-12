@@ -5,24 +5,25 @@ import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { useParamState } from "@/dist-lib/client";
 import { ParameterOptions, ValuedParameter } from "../../../../dist/types";
 import { encode } from "querystring";
-const pageParams:ParameterOptions<number> = {
+const pageParam:ParameterOptions<number> = {
     name:'page',
     ...pageType
 }
-const Form:FunctionComponent = ()=>{
-  const [isResetPage,setIsResetPage] = useState(false)
-  const [value,setValue]  = useParamState({
+const valueParam = {
   ...stringType,
     name:'url_change_test_input_value',
-  },{
+  }
+const Form:FunctionComponent = ()=>{
+  const [isResetPage,setIsResetPage] = useState(false)
+  const [value,setValue]  = useParamState(valueParam,{
     updateValue: (link) =>{
       if (isResetPage) {
-        link.setValue(pageParams,1)
+        link.setValue(pageParam,1)
       }
       return link
     },
   }) //This tests `updateValues` type safey. It cause a bad developer experience, so keep it to prrof that type afety works without ny issues for the developer
-   const [page,setPage] = useParamState(pageParams,)
+   const [page,setPage] = useParamState(pageParam,)
   const router = useRouter()
   const [countSearchParamsChanged,setCountSearchParamsChanged] = useState(0)
   const queryStr = useSearchParams().toString()

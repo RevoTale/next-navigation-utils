@@ -88,6 +88,22 @@ test('useParamState hook - URL state synchronization with debouncing', async ({ 
     ).toHaveValue('text_updated_from_browser_router',{
       timeout: 3000
     })
+
+    //Test value change middleware
+        await expect(page.getByTestId('page_value')).toHaveText('1')
+
+    await page.getByTestId('next_page').click()
+    await expect(page.getByTestId('page_value')).toHaveText('2')
+        await page.getByTestId('form-input').pressSequentially('not trigger page reset')
+            await expect(page.getByTestId('page_value')).toHaveText('2')
+
+    await page.waitForTimeout(1200)
+
+    await page.getByTestId('toggle_page_reset').click()
+    await expect(page.getByTestId('page_reset_active')).toHaveText('Page reset active')
+    await page.getByTestId('form-input').pressSequentially('trigger page reset')
+    await page.waitForTimeout(1200)
+    await expect(page.getByTestId('page_value')).toHaveText('1')
 })
 
 test('linker',    ()=>{

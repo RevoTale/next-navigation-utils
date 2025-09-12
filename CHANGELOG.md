@@ -1,5 +1,11 @@
 # next-navigation-utils
 
+## 1.0.1
+
+### Patch Changes
+
+- 3702994: Refactor `updateValues` option to the `updateValue`. Reduced the complexity of typescript code and end-developer usage oif this middleware.
+
 ## 1.0.0
 
 ### Major Changes

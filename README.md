@@ -2,8 +2,12 @@
 
 [![npm version](https://badge.fury.io/js/next-navigation-utils.svg)](https://badge.fury.io/js/next-navigation-utils)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
-
 Type-safe URL parameter management for Next.js applications. Seamlessly bridge server-side `searchParams`, client-side `URLSearchParams`, and relative/absolute URLs via a fluent Link Builder — all with full TypeScript support.
+
+<img width="1536" height="1024" alt="image" src="./preview.png" />
+
+
+
 
 ## Why next-navigation-utils?
 

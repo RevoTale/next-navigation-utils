@@ -54,13 +54,13 @@
     "url": "https://github.com/RevoTale/next-navigation-utils/issues"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.6",
+    "@changesets/cli": "^2.29.7",
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.3.0",
-    "@types/react": "^19.1.12",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
     "changeset": "^0.2.6",
-    "eslint": "^9.34.0",
-    "eslint-config-love": "^120.0.0",
+    "eslint": "^9.36.0",
+    "eslint-config-love": "^125.0.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "typescript": "^5.9.2"
   },
@@ -71,6 +71,6 @@
   "packageManager": "pnpm@10.12.1",
   "dependencies": {
     "tsup": "^8.5.0",
-    "use-debounce": "^10.0.5"
+    "use-debounce": "^10.0.6"
   }
 }

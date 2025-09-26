@@ -13,7 +13,8 @@ const defaultDebounceTimer = 1000
 
 const useParamState = <T>(params: ParameterOptions<T>, {
     debounce = defaultDebounceTimer,
-    updateValue
+    updateValue,
+    navigate
 }: ParamsStateOptions = {}): [T, SetStateCallback<T>] => {
     const router =  useRouter()
     const link = useRelativeLink()
@@ -25,9 +26,12 @@ const useParamState = <T>(params: ParameterOptions<T>, {
 
         const updatedLink = linkBuilder.setValue(params,value)
         const valueMiddleware  = updateValue === undefined?updatedLink:updateValue(updatedLink,linkBuilder)
-
-        router.push(valueMiddleware.getLink().asString())
-
+        const targetHref = valueMiddleware.getLink().asString()
+        if (navigate?.push === true) {
+            router.push(targetHref,navigate)
+            return
+        }
+        router.replace(targetHref,navigate)
     },debounce)
     useEffect(()=>{ 
         const currentLink = link.asString()

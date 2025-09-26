@@ -1,5 +1,11 @@
 # next-navigation-utils
 
+## 1.0.3
+
+### Patch Changes
+
+- 4266d0c: Add built-in nextjs navigation option to url state
+
 ## 1.0.2
 
 ### Patch Changes

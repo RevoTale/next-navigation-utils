@@ -9,7 +9,7 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
-    "next": "15.4.7",
+    "next": "15.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
@@ -18,7 +18,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "eslint": "^9.29.0",
-    "eslint-config-next": "15.3.4",
+    "eslint-config-next": "15.5.4",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.17.1"

@@ -24,8 +24,8 @@ jobs:
             nextjs-version: '14.0.0'
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4.1.0
-      - uses: actions/setup-node@v5
+      - uses: pnpm/action-setup@v4.2.0
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
@@ -61,8 +61,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4.1.0
-      - uses: actions/setup-node@v5
+      - uses: pnpm/action-setup@v4.2.0
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: pnpm
@@ -73,8 +73,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v4.1.0
-      - uses: actions/setup-node@v5
+      - uses: pnpm/action-setup@v4.2.0
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: pnpm

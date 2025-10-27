@@ -60,8 +60,8 @@
     "@types/react": "^19.1.14",
     "changeset": "^0.2.6",
     "eslint": "^9.36.0",
-    "eslint-config-love": "^130.0.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-config-love": "^133.0.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {

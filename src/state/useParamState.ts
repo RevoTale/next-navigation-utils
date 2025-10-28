@@ -37,6 +37,7 @@ const useParamState = <T>(params: ParameterOptions<T>, {
         const currentLink = link.asString()
         const inputValueURL = createLinker(link).setValue(params,value).asString();
         if (inputValueURL !== currentLink && !updateQueryValue.isPending()) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- haven't found workaround yet. Looking for the best practice
             setValue(queryValue)
         }
     },[debounce, link, params, queryValue, updateQueryValue, value])

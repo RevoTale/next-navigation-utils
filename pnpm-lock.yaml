@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       next:
-        specifier: ^14.0 || ^15.0
+        specifier: ^14.0 || ^15.0 || ^16.0.0
         version: 15.4.7(@babel/core@7.28.5)(@playwright/test@1.56.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^18.0 || ^19.0
@@ -937,9 +937,6 @@ packages:
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
-
-  caniuse-lite@1.0.30001642:
-    resolution: {integrity: sha512-3XQ0DoRgLijXJErLSl+bLnJ+Et4KqV1PY6JJBGAFlsNsz31zeAIncyeZfLCabHK/jtSh+671RM9YMldxjUPZtA==}
 
   caniuse-lite@1.0.30001751:
     resolution: {integrity: sha512-A0QJhug0Ly64Ii3eIqHu5X51ebln3k4yTUkY1j8drqpWHVreg/VLijN48cZ1bYPiqOQuqpkIKnzr/Ul8V+p6Cw==}
@@ -3237,8 +3234,6 @@ snapshots:
 
   callsites@3.1.0: {}
 
-  caniuse-lite@1.0.30001642: {}
-
   caniuse-lite@1.0.30001751: {}
 
   chalk@4.1.2:
@@ -4137,7 +4132,7 @@ snapshots:
     dependencies:
       '@next/env': 15.4.7
       '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001642
+      caniuse-lite: 1.0.30001751
       postcss: 8.4.31
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)

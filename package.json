@@ -60,7 +60,7 @@
     "@types/react": "^19.1.14",
     "changeset": "^0.2.6",
     "eslint": "^9.36.0",
-    "eslint-config-love": "^136.0.0",
+    "eslint-config-love": "^137.0.0",
     "eslint-plugin-react-hooks": "^7.0.0",
     "typescript": "^5.9.2"
   },

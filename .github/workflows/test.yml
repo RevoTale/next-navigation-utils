@@ -46,12 +46,12 @@ jobs:
           CI: true
           NEXTJS_VERSION: ${{ matrix.nextjs-version }}
           NODE_VERSION: ${{ matrix.node-version }}
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-node${{ matrix.node-version }}-next${{ matrix.nextjs-version }}
           path: playwright-report/
         if: failure()
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           pattern: my-artifacts-${{inputs.context}}*
           merge-multiple: true

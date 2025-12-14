@@ -1,5 +1,11 @@
 # next-navigation-utils
 
+## 1.0.4
+
+### Patch Changes
+
+- d01056c: Release the dependacies upgrade from main branch.
+
 ## 1.0.3
 
 ### Patch Changes

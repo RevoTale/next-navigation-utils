@@ -1,6 +1,3 @@
 {
-  "paths": [
-    "./src/**/*.tsx",
-    "./src/**/*.ts"
-  ]
+	"paths": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

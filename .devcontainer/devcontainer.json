@@ -6,9 +6,7 @@
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-trixie",
 	"customizations": {
 		"vscode": {
-			"extensions": [
-				"GitHub.vscode-pull-request-github"
-			]
+			"extensions": ["GitHub.vscode-pull-request-github"]
 		}
 	}
 

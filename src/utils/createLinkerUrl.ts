@@ -1,42 +1,41 @@
-import type {AbsoltuteLinkBuilder, Linker, ParameterOptions} from "../types"
-import setSearchParamValue from "../searchParams/setSearchParamValue"
+import setSearchParamValue from "../searchParams/setSearchParamValue";
+import type { AbsoltuteLinkBuilder, Linker, ParameterOptions } from "../types";
 
-
-
-  
-const startBuilder = (url:URL):AbsoltuteLinkBuilder=>{
-        const newSearch = new URLSearchParams()
-        url.searchParams.forEach((value, key) => {
-            newSearch.append(key, value)
-        })
-        const builder:AbsoltuteLinkBuilder =  {
-            setValue:(param,value)=>{
-                setSearchParamValue(newSearch, param, value)
-                return builder
-            },
-            getLink:()=>{
-                const newURL = new URL(url)
-                newSearch.forEach((value, key) => {
-                    newURL.searchParams.append(key, value)
-                })
-                return newURL
-            },
-            asString:()=>builder.getLink().toString()
-        }
-        return builder
-}
+const startBuilder = (url: URL): AbsoltuteLinkBuilder => {
+	const newSearch = new URLSearchParams();
+	url.searchParams.forEach((value, key) => {
+		newSearch.append(key, value);
+	});
+	const builder: AbsoltuteLinkBuilder = {
+		setValue: (param, value) => {
+			setSearchParamValue(newSearch, param, value);
+			return builder;
+		},
+		getLink: () => {
+			const newURL = new URL(url);
+			newSearch.forEach((value, key) => {
+				newURL.searchParams.append(key, value);
+			});
+			return newURL;
+		},
+		asString: () => builder.getLink().toString(),
+	};
+	return builder;
+};
 const createLinker = (link: URL): Linker<URL> => {
+	const getValue = <V>({
+		decode,
+		name,
+	}: Pick<ParameterOptions<V>, "name" | "decode">): V =>
+		decode(link.searchParams.getAll(name));
 
-    const getValue = <V>({decode, name}: Pick<ParameterOptions<V>, 'name' | 'decode'>): V =>
-        decode(link.searchParams.getAll(name))
+	const linker: Linker<URL> = {
+		setValue: (param, value) => startBuilder(link).setValue(param, value),
+		getValue,
+		getLink: () => link,
+		asString: () => linker.getLink().toString(),
+	};
+	return linker;
+};
 
-    const linker: Linker<URL> = {
-        setValue:(param,value)=>startBuilder(link).setValue(param,value),
-        getValue,
-        getLink:()=>link,
-        asString:()=>linker.getLink().toString()
-    }
-    return linker
-}
-
-export default createLinker
+export default createLinker;

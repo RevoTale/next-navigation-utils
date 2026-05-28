@@ -25,7 +25,7 @@ Converting between them while keeping type safety & avoiding brittle string fidd
 - 🎯 **Type Safety** – Strong typing for parameters & return values
 - 🪝 **React Hooks** – Extract & sync URL state with zero boilerplate
 - 🔗 **Fluent Link Builder** – Immutable, chainable URL editing (relative & absolute)
-- ⚡ **Next.js Native** – Designed for the App Router (14+ / 15+)
+- ⚡ **Next.js Native** – Designed for the App Router (15+)
 - 🎛️ **State Sync** – Debounced two‑way sync between input state & URL
 - 🧪 **Deterministic** – Pure helpers for server & test environments
 - 📦 **Tree Shakeable** – Modular exports for optimal bundle size
@@ -500,7 +500,7 @@ const [search, setSearch] = useParamState(categoryParam) // [string | null, (val
 
 ## Requirements
 
-- Next.js 14+ / 15+
+- Next.js 15+
 - React 18+ / 19+
 - TypeScript (recommended)
 

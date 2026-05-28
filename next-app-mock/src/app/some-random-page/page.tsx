@@ -1,10 +1,6 @@
-import { ParameterOptions } from "@/dist-lib";
-import { pageType } from "@/dist-lib/parameters";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
-const Page:FunctionComponent =()=>{
-return <div data-testid="some_random_page">
-    Some random page
-</div>
-}
-export default Page
+const Page: FunctionComponent = () => {
+	return <div data-testid="some_random_page">Some random page</div>;
+};
+export default Page;

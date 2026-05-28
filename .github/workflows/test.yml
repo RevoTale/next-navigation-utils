@@ -16,43 +16,33 @@ jobs:
     strategy:
       matrix:
         include:
-          - node-version: 20
-            nextjs-version: '14.0.0'
-            react-version: '18.2.0'
-            react-types-version: '18'
-            os: ubuntu-latest
-          - node-version: 20
-            nextjs-version: '14.2.30'
-            react-version: '18.2.0'
-            react-types-version: '18'
-            os: ubuntu-latest
-          - node-version: 22
-            nextjs-version: '14.2.30'
-            react-version: '18.2.0'
-            react-types-version: '18'
-            os: ubuntu-latest
-          - node-version: 20
+          - node-version: 24
             nextjs-version: '15.0.0'
             react-version: '18.2.0'
             react-types-version: '18'
             os: ubuntu-latest
-          - node-version: 22
+          - node-version: 26
             nextjs-version: '15.0.0'
             react-version: '18.2.0'
             react-types-version: '18'
             os: ubuntu-latest
-          - node-version: 20
+          - node-version: 24
             nextjs-version: '15.3.4'
             react-version: '18.2.0'
             react-types-version: '18'
             os: ubuntu-latest
-          - node-version: 22
+          - node-version: 26
             nextjs-version: '15.3.4'
             react-version: '18.2.0'
             react-types-version: '18'
             os: ubuntu-latest
           - node-version: 24
-            nextjs-version: '16.2.3'
+            nextjs-version: '16.2.6'
+            react-version: '19.2.5'
+            react-types-version: '19'
+            os: ubuntu-latest
+          - node-version: 26
+            nextjs-version: '16.2.6'
             react-version: '19.2.5'
             react-types-version: '19'
             os: ubuntu-latest

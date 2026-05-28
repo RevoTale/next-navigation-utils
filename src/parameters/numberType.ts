@@ -4,7 +4,7 @@ import makeParamType from "../utils/makeParamType";
 const decodeNumber: ParameterValueDecoder<number | null> = (param) => {
 	if (typeof param === "string") {
 		const number = Number(param);
-		if (isNaN(number)) {
+		if (Number.isNaN(number)) {
 			return null;
 		}
 		return number;

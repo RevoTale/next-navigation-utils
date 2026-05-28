@@ -5,8 +5,8 @@ export default defineConfig({
 	sourcemap: true,
 	clean: true,
 	format: ["cjs", "esm"],
-	dts: true,
-	bundle: false,
+	bundle: true,
+	external: ["next", "next/*", "react", "react/*", "use-debounce"],
 	esbuildOptions(options) {
 		options.drop = ["console"]; // this is the esbuild option
 	},

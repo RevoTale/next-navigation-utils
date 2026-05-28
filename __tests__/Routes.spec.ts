@@ -1,10 +1,5 @@
 import { expect, test } from "@playwright/test";
-import {
-	createLinker,
-	createLinkerUrl,
-	parseLink,
-	queryToSearchParams,
-} from "../src/index";
+import { createLinker, parseLink, queryToSearchParams } from "../src/index";
 import parseRelativeLink from "../src/utils/parseRelativeLink";
 
 test("URL parameter handling and linker functionality", async ({ page }) => {
@@ -77,7 +72,7 @@ test("useParamState hook - URL state synchronization with debouncing", async ({
 
 	const expectedUrl = new URLSearchParams();
 	expectedUrl.set("url_change_test_input_value", "Hello World!");
-	await expect(page).toHaveURL("/url-state-form?" + expectedUrl.toString());
+	await expect(page).toHaveURL(`/url-state-form?${expectedUrl.toString()}`);
 	await expect(
 		page.getByTestId("form-input"),
 		"Input value is the same as typed",

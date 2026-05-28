@@ -6,7 +6,7 @@
 	},
 	"version": "1.0.4",
 	"name": "next-navigation-utils",
-	"main": "src/index.ts",
+	"main": "index.js",
 	"license": "MIT",
 	"private": false,
 	"sideEffects": false,
@@ -31,7 +31,6 @@
 	"publishConfig": {
 		"provenance": true,
 		"access": "public",
-		"main": "index.js",
 		"directory": "dist"
 	},
 	"repository": {
@@ -40,26 +39,28 @@
 	},
 	"type": "module",
 	"scripts": {
-		"build": "tsup && cp package.json README.md LICENSE dist/",
+		"build": "rm -rf dist && tsup && tsc --emitDeclarationOnly --listEmittedFiles false && cp package.json README.md LICENSE dist/",
 		"tsc": "tsc --noEmit",
 		"changeset:version": "changeset version && git add --all",
 		"changeset:publish": "changeset publish",
 		"prepare": "pnpm build",
 		"test": "pnpm lint && pnpm tsc && pnpm unit",
 		"unit": "playwright test -x",
-		"lint": "pnpx @biomejs/biome check .",
-		"lint:fix": "pnpx @biomejs/biome check --write"
+		"lint": "biome check .",
+		"lint:fix": "biome check --write ."
 	},
 	"bugs": {
 		"url": "https://github.com/RevoTale/next-navigation-utils/issues"
 	},
 	"devDependencies": {
-		"@changesets/cli": "^2.29.7",
-		"@playwright/test": "^1.55.1",
-		"@types/node": "^24.6.0",
-		"@types/react": "^19.1.14",
+		"@changesets/cli": "^2.30.0",
+		"@biomejs/biome": "^2.4.12",
+		"@playwright/test": "^1.59.1",
+		"@types/node": "^24.12.2",
+		"@types/react": "^19.2.14",
 		"changeset": "^0.2.6",
-		"typescript": "^5.9.2"
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3"
 	},
 	"peerDependencies": {
 		"next": "^14.0 || ^15.0 || ^16.0.0",
@@ -67,8 +68,6 @@
 	},
 	"packageManager": "pnpm@10.33.0",
 	"dependencies": {
-		"@biomejs/biome": "^2.4.11",
-		"tsup": "^8.5.0",
-		"use-debounce": "^10.0.6"
+		"use-debounce": "^10.1.1"
 	}
 }

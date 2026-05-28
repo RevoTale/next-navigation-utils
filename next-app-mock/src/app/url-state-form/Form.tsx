@@ -1,10 +1,9 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { encode } from "querystring";
 import { type FunctionComponent, useEffect, useRef, useState } from "react";
+import type { ParameterOptions } from "@/dist-lib";
 import { useParamState } from "@/dist-lib/client";
 import { pageType, stringType } from "@/dist-lib/parameters";
-import { type ParameterOptions, ValuedParameter } from "../../../../dist/types";
 
 const pageParam: ParameterOptions<number> = {
 	name: "page",
@@ -23,7 +22,7 @@ const Form: FunctionComponent = () => {
 			}
 			return link;
 		},
-	}); //This tests `updateValues` type safey. It cause a bad developer experience, so keep it to prrof that type afety works without ny issues for the developer
+	}); // Tests updateValue type safety against the generated package declarations.
 	const [page, setPage] = useParamState(pageParam);
 	const router = useRouter();
 	const [countSearchParamsChanged, setCountSearchParamsChanged] = useState(0);
@@ -47,6 +46,7 @@ const Form: FunctionComponent = () => {
 			></input>
 			<div data-testid="url_change_time">{countSearchParamsChanged}</div>
 			<button
+				type="button"
 				data-testid="change_url_button"
 				onClick={() => {
 					router.push(
@@ -57,6 +57,7 @@ const Form: FunctionComponent = () => {
 				Change URL
 			</button>
 			<button
+				type="button"
 				data-testid="next_page"
 				onClick={() => {
 					setPage(page + 1);
@@ -65,6 +66,7 @@ const Form: FunctionComponent = () => {
 				Next page
 			</button>
 			<button
+				type="button"
 				data-testid="toggle_page_reset"
 				onClick={() => {
 					setIsResetPage((prev) => !prev);

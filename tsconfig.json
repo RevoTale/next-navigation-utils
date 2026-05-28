@@ -1,9 +1,13 @@
 {
 	"compilerOptions": {
-		"types": ["node"], // @types are no longer auto-discovered (see §1.6)
+		"types": ["node"],
 		"rootDir": "./src",
-		"jsx": "react-jsx",
+		"module": "preserve",
+		"target": "ESNext",
 		"lib": ["es6", "es7", "esnext", "dom"],
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"verbatimModuleSyntax": true,
 		"noImplicitReturns": true,
 		"strict": true,
 		"strictFunctionTypes": true,
@@ -25,10 +29,7 @@
 		"isolatedModules": true,
 		"outDir": "dist",
 		"noEmit": false,
-		"emitDeclarationOnly": false,
-		"paths": {
-			"@/dist-lib": ["./dist"]
-		}
+		"emitDeclarationOnly": false
 	},
 	"include": ["src"]
 }

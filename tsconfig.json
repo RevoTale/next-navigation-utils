@@ -1,45 +1,35 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "jsx": "react-jsx",
-    "target": "ESNext",
-    "lib": [
-      "es6",
-      "es7",
-      "esnext",
-      "dom"
-    ],
-    "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "strict": true,
-    "strictFunctionTypes": true,
-    "noUnusedLocals": true,
-    "pretty": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
-    "listEmittedFiles": true,
-    "allowJs": false,
-    "declaration": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
-    "alwaysStrict": true,
-    "noImplicitThis": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "outDir": "dist",
-    "noEmit": false,
-    "emitDeclarationOnly": false,
-    "paths": {
-      "@/dist-lib": [
-        "./dist"
-      ],
-    }
-  },
-  "include": [
-    "src"
-  ],
+	"compilerOptions": {
+		"types": ["node"],
+		"rootDir": "./src",
+		"module": "preserve",
+		"target": "ESNext",
+		"lib": ["es6", "es7", "esnext", "dom"],
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"verbatimModuleSyntax": true,
+		"noImplicitReturns": true,
+		"strict": true,
+		"strictFunctionTypes": true,
+		"noUnusedLocals": true,
+		"pretty": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"listEmittedFiles": true,
+		"allowJs": false,
+		"declaration": true,
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": true,
+		"alwaysStrict": true,
+		"noImplicitThis": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"outDir": "dist",
+		"noEmit": false,
+		"emitDeclarationOnly": false
+	},
+	"include": ["src"]
 }

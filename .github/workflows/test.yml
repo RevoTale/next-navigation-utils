@@ -10,18 +10,42 @@ permissions:
   contents: read
 jobs:
   Unit:
-    name: Unit Tests (Node ${{ matrix.node-version }}, Next.js ${{ matrix.nextjs-version }})
+    name: Unit Tests (Node ${{ matrix.node-version }}, Next.js ${{ matrix.nextjs-version }}, React ${{ matrix.react-version }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       matrix:
-        node-version: [20,22]
-        nextjs-version: ['14.0.0', '14.2.30', '15.0.0', '15.3.4']
-        os: [ubuntu-latest]
-        exclude:
-          # Node 22 wasn't supported in early Next.js 14 versions
-          - node-version: 22
-            nextjs-version: '14.0.0'
+        include:
+          - node-version: 24
+            nextjs-version: '15.0.0'
+            react-version: '18.2.0'
+            react-types-version: '18'
+            os: ubuntu-latest
+          - node-version: 26
+            nextjs-version: '15.0.0'
+            react-version: '18.2.0'
+            react-types-version: '18'
+            os: ubuntu-latest
+          - node-version: 24
+            nextjs-version: '15.3.4'
+            react-version: '18.2.0'
+            react-types-version: '18'
+            os: ubuntu-latest
+          - node-version: 26
+            nextjs-version: '15.3.4'
+            react-version: '18.2.0'
+            react-types-version: '18'
+            os: ubuntu-latest
+          - node-version: 24
+            nextjs-version: '16.2.6'
+            react-version: '19.2.5'
+            react-types-version: '19'
+            os: ubuntu-latest
+          - node-version: 26
+            nextjs-version: '16.2.6'
+            react-version: '19.2.5'
+            react-types-version: '19'
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v5.0.0
@@ -33,18 +57,20 @@ jobs:
             pnpm-lock.yaml
             next-app-mock/pnpm-lock.yaml
       - run: pnpm i && pnpm build
-      - name: Install Next.js version ${{ matrix.nextjs-version }}
+      - name: Install framework versions
         run: |
           cd next-app-mock
           echo "Installing Next.js version ${{ matrix.nextjs-version }}"
-          pnpm add next@${{ matrix.nextjs-version }}
-          echo "Installed Next.js version:"
-          pnpm list next
+          pnpm add next@${{ matrix.nextjs-version }} react@${{ matrix.react-version }} react-dom@${{ matrix.react-version }}
+          pnpm add -D @types/react@${{ matrix.react-types-version }} @types/react-dom@${{ matrix.react-types-version }}
+          echo "Installed framework versions:"
+          pnpm list next react react-dom
       - run: pnpm playwright install --with-deps
       - run: pnpm test
         env:
           CI: true
           NEXTJS_VERSION: ${{ matrix.nextjs-version }}
+          REACT_VERSION: ${{ matrix.react-version }}
           NODE_VERSION: ${{ matrix.node-version }}
       - uses: actions/upload-artifact@v7
         with:

@@ -54,7 +54,7 @@
     "url": "https://github.com/RevoTale/next-navigation-utils/issues"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
+    "@changesets/cli": "^3.0.0",
     "@playwright/test": "^1.55.1",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.14",

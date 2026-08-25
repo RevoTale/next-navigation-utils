@@ -3,13 +3,8 @@
     "module": "esnext",
     "jsx": "react-jsx",
     "target": "ESNext",
-    "lib": [
-      "es6",
-      "es7",
-      "esnext",
-      "dom"
-    ],
-    "moduleResolution": "node",
+    "lib": ["es6", "es7", "esnext", "dom"],
+    "moduleResolution": "bundler",
     "noImplicitReturns": true,
     "strict": true,
     "strictFunctionTypes": true,
@@ -17,7 +12,6 @@
     "pretty": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "downlevelIteration": true,
     "skipLibCheck": true,
     "listEmittedFiles": true,
     "allowJs": false,
@@ -34,12 +28,8 @@
     "noEmit": false,
     "emitDeclarationOnly": false,
     "paths": {
-      "@/dist-lib": [
-        "./dist"
-      ],
+      "@/dist-lib": ["./dist"]
     }
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"]
 }

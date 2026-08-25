@@ -1,12 +1,11 @@
-import { FunctionComponent, Suspense } from "react";
-import Form from "./Form";
+import { type FunctionComponent, Suspense } from 'react'
+import Form from './Form'
 
-const Page:FunctionComponent = ()=>{
-return <div>
+const Page: FunctionComponent = () => (
+  <div>
     <Suspense>
-        <Form/>
+      <Form />
     </Suspense>
-</div>
-
-}
+  </div>
+)
 export default Page

@@ -11,9 +11,10 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 const port = Number(process.env.PORT) || 3033
+const appDirectory = process.env.NEXT_APP_DIRECTORY ?? 'next-app-mock'
 export default defineConfig({
   webServer: {
-    command: `pnpm build && pnpm -C ./next-app-mock build && pnpm -C ./next-app-mock start --port ${port}`,
+    command: `pnpm build && pnpm -C ./${appDirectory} build && pnpm -C ./${appDirectory} start --port ${port}`,
     port,
     reuseExistingServer: false, // Always fresh for testing
   },

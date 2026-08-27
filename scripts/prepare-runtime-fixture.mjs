@@ -13,6 +13,7 @@ const fixtureFiles = [
   ['next-app-mock/package.json', 'package.json'],
   ['next-app-mock/jsconfig.runtime.json', 'jsconfig.json'],
   ['compatibility/compatibility-types.tsx', 'compatibility-types.tsx'],
+  ['compatibility/commonjs.cjs', 'commonjs.cjs'],
   ['compatibility/tsconfig.json', 'tsconfig.types.json'],
   ['next-app-mock/src/app/page.module.css', 'src/app/page.module.css'],
 ]

@@ -20,9 +20,9 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/dist-lib": ["../dist/index"],
-      "@/dist-lib/client": ["../dist/client"],
-      "@/dist-lib/parameters": ["../dist/parameters"]
+      "next-navigation-utils": ["../dist/index"],
+      "next-navigation-utils/client": ["../dist/client"],
+      "next-navigation-utils/parameters": ["../dist/parameters"]
     }
   },
   "include": [

@@ -1,6 +1,6 @@
 'use client'
-import { useLinker, useRelativeLink } from '@/dist-lib/client'
-import { boolType, stringType } from '@/dist-lib/parameters'
+import { useLinker, useRelativeLink } from 'next-navigation-utils/client'
+import { boolType, stringType } from 'next-navigation-utils/parameters'
 
 const CurrentUrlBlock = () => {
   const currentUrl = useRelativeLink()

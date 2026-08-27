@@ -42,20 +42,35 @@ jobs:
           merge-multiple: true
         if: failure()
   Compatibility:
-    name: Runtime compatibility (Next.js ${{ matrix.nextjs-version }})
+    name: Runtime compatibility (Next.js ${{ matrix.nextjs-version }}, ${{ matrix.release }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
       matrix:
         include:
-          - nextjs-version: 14
-            react-version: 18
+          - nextjs-version: 14.0.0
+            release: minimum
+            react-version: 18.2.0
             react-types-version: 18
-          - nextjs-version: 15
-            react-version: 19
+          - nextjs-version: ^14
+            release: current
+            react-version: ^18.2.0
+            react-types-version: 18
+          - nextjs-version: 15.0.0
+            release: minimum
+            react-version: 18.2.0
+            react-types-version: 18
+          - nextjs-version: ^15
+            release: current
+            react-version: ^19.0.0
             react-types-version: 19
-          - nextjs-version: 16
-            react-version: 19
+          - nextjs-version: 16.0.0
+            release: minimum
+            react-version: 19.0.0
+            react-types-version: 19
+          - nextjs-version: ^16
+            release: current
+            react-version: ^19.2.0
             react-types-version: 19
     steps:
       - uses: actions/checkout@v7
@@ -69,13 +84,14 @@ jobs:
       - name: Install compatibility versions
         run: >-
           pnpm --dir next-app-runtime --ignore-workspace add --ignore-scripts
-          next@^${{ matrix.nextjs-version }}
-          react@^${{ matrix.react-version }}
-          react-dom@^${{ matrix.react-version }}
+          next@${{ matrix.nextjs-version }}
+          react@${{ matrix.react-version }}
+          react-dom@${{ matrix.react-version }}
           @types/react@^${{ matrix.react-types-version }}
           @types/react-dom@^${{ matrix.react-types-version }}
           ./next-navigation-utils.tgz
       - run: pnpm --dir next-app-runtime --ignore-workspace exec tsc -p tsconfig.types.json
+      - run: node next-app-runtime/commonjs.cjs
       - run: pnpm playwright install --with-deps
       - run: pnpm unit
         env:

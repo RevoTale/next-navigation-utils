@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { createLinker, parseLink, queryToSearchParams } from '../src/index'
+import { createLinker, parseLink, type QueryParameters, queryToSearchParams } from '../src/index'
 import parseRelativeLink from '../src/utils/parseRelativeLink'
 
 test('URL parameter handling and linker functionality', async ({ page }) => {
@@ -28,15 +28,17 @@ test('URL parameter handling and linker functionality', async ({ page }) => {
   )
 })
 
-test('queryToSearchParams utility function', async () => {
-  const result = queryToSearchParams({
-    ww: ['a', 'b'],
+test('queryToSearchParams utility function', () => {
+  const query = Object.assign(Object.create({ inherited: 'ignored' }), {
     c: 'n',
     v: undefined,
-  })
+    ww: ['a', 'b'],
+  }) as QueryParameters
+  const result = queryToSearchParams(query)
 
-  expect(result.toString()).toBe('ww=a&ww=b&c=n')
+  expect(result.toString()).toBe('c=n&ww=a&ww=b')
 })
+
 test('useParamState hook - URL state synchronization with debouncing', async ({ page }) => {
   await page.goto('/url-state-form')
   await expect(page).toHaveURL('/url-state-form')

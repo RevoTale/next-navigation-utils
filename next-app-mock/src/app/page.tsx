@@ -1,5 +1,5 @@
-import { getQueryParamValue, type QueryParameters } from '@/dist-lib'
-import { stringType } from '@/dist-lib/parameters'
+import { getQueryParamValue, type QueryParameters } from 'next-navigation-utils'
+import { stringType } from 'next-navigation-utils/parameters'
 
 const Page = async ({ searchParams }: { searchParams: Promise<QueryParameters> }) => {
   const value = getQueryParamValue(await searchParams, {

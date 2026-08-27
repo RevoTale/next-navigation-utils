@@ -2,11 +2,7 @@ import type { QueryParameters } from '../types'
 
 const queryToSearchParams = (query: QueryParameters): URLSearchParams => {
   const params = new URLSearchParams()
-  for (const name in query) {
-    if (!Object.hasOwn(query, name)) {
-      continue
-    }
-    const { [name]: encoded } = query
+  for (const [name, encoded] of Object.entries(query)) {
     if (encoded === undefined) {
       continue
     }

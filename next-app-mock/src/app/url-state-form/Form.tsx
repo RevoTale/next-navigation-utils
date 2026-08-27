@@ -1,9 +1,9 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
+import type { ParameterOptions } from 'next-navigation-utils'
+import { useParamState } from 'next-navigation-utils/client'
+import { pageType, stringType } from 'next-navigation-utils/parameters'
 import { type FunctionComponent, useEffect, useRef, useState } from 'react'
-import { useParamState } from '@/dist-lib/client'
-import { pageType, stringType } from '@/dist-lib/parameters'
-import type { ParameterOptions } from '../../../../dist/types'
 
 const pageParam: ParameterOptions<number> = {
   name: 'page',

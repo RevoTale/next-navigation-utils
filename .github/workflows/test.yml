@@ -10,18 +10,13 @@ permissions:
   contents: read
 jobs:
   Unit:
-    name: Unit Tests (Node ${{ matrix.node-version }}, Next.js ${{ matrix.nextjs-version }})
+    name: Unit Tests (Node ${{ matrix.node-version }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       matrix:
         node-version: [22,24,26]
-        nextjs-version: ['14.0.0', '14.2.30', '15.0.0', '15.3.4']
         os: [ubuntu-latest]
-        exclude:
-          # Node 22 wasn't supported in early Next.js 14 versions
-          - node-version: 22
-            nextjs-version: '14.0.0'
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6.0.10
@@ -29,26 +24,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
-          cache-dependency-path: |
-            pnpm-lock.yaml
-            next-app-mock/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
       - run: pnpm i && pnpm build
-      - name: Install Next.js version ${{ matrix.nextjs-version }}
-        run: |
-          cd next-app-mock
-          echo "Installing Next.js version ${{ matrix.nextjs-version }}"
-          pnpm add next@${{ matrix.nextjs-version }}
-          echo "Installed Next.js version:"
-          pnpm list next
       - run: pnpm playwright install --with-deps
       - run: pnpm test
         env:
           CI: true
-          NEXTJS_VERSION: ${{ matrix.nextjs-version }}
           NODE_VERSION: ${{ matrix.node-version }}
       - uses: actions/upload-artifact@v7
         with:
-          name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-node${{ matrix.node-version }}-next${{ matrix.nextjs-version }}
+          name: my-artifacts-${{inputs.context}}-${{inputs.job-index}}-node${{ matrix.node-version }}
           path: playwright-report/
         if: failure()
       - uses: actions/download-artifact@v8
@@ -56,6 +41,62 @@ jobs:
           pattern: my-artifacts-${{inputs.context}}*
           merge-multiple: true
         if: failure()
+  Compatibility:
+    name: Runtime compatibility (Next.js ${{ matrix.nextjs-version }}, ${{ matrix.release }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        include:
+          - nextjs-version: 14.0.0
+            release: minimum
+            react-version: 18.2.0
+            react-types-version: 18
+          - nextjs-version: ^14
+            release: current
+            react-version: ^18.2.0
+            react-types-version: 18
+          - nextjs-version: 15.0.0
+            release: minimum
+            react-version: 18.2.0
+            react-types-version: 18
+          - nextjs-version: ^15
+            release: current
+            react-version: ^19.0.0
+            react-types-version: 19
+          - nextjs-version: 16.0.0
+            release: minimum
+            react-version: 19.0.0
+            react-types-version: 19
+          - nextjs-version: ^16
+            release: current
+            react-version: ^19.2.0
+            react-types-version: 19
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6.0.10
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build && pnpm compat:prepare
+      - name: Install compatibility versions
+        run: >-
+          pnpm --dir next-app-runtime --ignore-workspace add --ignore-scripts
+          next@${{ matrix.nextjs-version }}
+          react@${{ matrix.react-version }}
+          react-dom@${{ matrix.react-version }}
+          @types/react@^${{ matrix.react-types-version }}
+          @types/react-dom@^${{ matrix.react-types-version }}
+          ./next-navigation-utils.tgz
+      - run: pnpm --dir next-app-runtime --ignore-workspace exec tsc -p tsconfig.types.json
+      - run: node next-app-runtime/commonjs.cjs
+      - run: pnpm playwright install --with-deps
+      - run: pnpm unit
+        env:
+          CI: true
+          NEXT_APP_DIRECTORY: next-app-runtime
   Lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -81,7 +122,7 @@ jobs:
       - run: pnpm i
       - run: pnpm tsc
   Test:
-    needs: [ Lint, Unit, Types ]
+    needs: [ Compatibility, Lint, Unit, Types ]
     runs-on: ubuntu-latest
     steps:
       - name: Success

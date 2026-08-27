@@ -40,29 +40,31 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsup && cp package.json README.md LICENSE dist/",
+    "build": "tsdown && cp package.json README.md LICENSE dist/",
+    "compat:prepare": "node scripts/prepare-runtime-fixture.mjs",
     "tsc": "tsc --noEmit",
     "changeset:version": "changeset version && git add --all",
     "changeset:publish": "changeset publish",
     "prepare": "pnpm build",
     "test": "pnpm lint && pnpm tsc && pnpm unit",
     "unit": "playwright test -x",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint": "biome check .",
+    "lint:fix": "biome check --write --unsafe ."
   },
   "bugs": {
     "url": "https://github.com/RevoTale/next-navigation-utils/issues"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.0",
-    "@playwright/test": "^1.55.1",
-    "@types/node": "^24.6.0",
-    "@types/react": "^19.1.14",
+    "@biomejs/biome": "2.5.10",
+    "@changesets/cli": "^3.0.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.3.0",
+    "@types/react": "^19.2.18",
     "changeset": "^0.2.6",
-    "eslint": "^9.36.0",
-    "eslint-config-love": "^137.0.0",
-    "eslint-plugin-react-hooks": "^7.0.0",
-    "typescript": "^5.9.2"
+    "next": "^16.3.3",
+    "react": "^19.2.8",
+    "tsdown": "^0.22.14",
+    "typescript": "7.0.2"
   },
   "peerDependencies": {
     "next": "^14.0 || ^15.0 || ^16.0.0",
@@ -70,7 +72,6 @@
   },
   "packageManager": "pnpm@11.23.0",
   "dependencies": {
-    "tsup": "^8.5.0",
-    "use-debounce": "^10.0.6"
+    "use-debounce": "^10.1.1"
   }
 }

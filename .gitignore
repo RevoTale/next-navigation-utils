@@ -1,5 +1,6 @@
 dist
 node_modules
+next-app-runtime
 .idea
 /test-results/
 /playwright-report/

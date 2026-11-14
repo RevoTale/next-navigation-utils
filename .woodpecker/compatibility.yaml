@@ -24,12 +24,12 @@ matrix:
 
 steps:
   - name: runtime-compatibility
-    image: node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496
+    image: mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
     environment:
       CI: 'true'
       NEXT_APP_DIRECTORY: next-app-runtime
     commands:
-      - npm install --global pnpm@12.5.1
+      - npm install --global node@24.22.3 pnpm@12.5.1
       - pnpm install --frozen-lockfile
       - pnpm build && pnpm compat:prepare
       - >-
@@ -39,5 +39,4 @@ steps:
         ./next-navigation-utils.tgz
       - pnpm --dir next-app-runtime --ignore-workspace exec tsc -p tsconfig.types.json
       - node next-app-runtime/commonjs.cjs
-      - pnpm playwright install --with-deps
       - pnpm unit

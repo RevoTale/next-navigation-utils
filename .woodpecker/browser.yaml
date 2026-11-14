@@ -1,0 +1,25 @@
+when:
+  - event: [push, pull_request]
+
+matrix:
+  include:
+    - NODE: '22'
+      NODE_VERSION: '22.23.5'
+    - NODE: '24'
+      NODE_VERSION: '24.22.3'
+    - NODE: '26'
+      NODE_VERSION: '26.13.1'
+
+steps:
+  - name: browser-tests
+    image: mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
+    environment:
+      CI: 'true'
+      NODE_VERSION: ${NODE}
+    commands:
+      - npm install --global --prefix /tmp/ci-node node@${NODE_VERSION} pnpm@12.5.1
+      - export PATH=/tmp/ci-node/bin:$PATH
+      - test "$$(node --version)" = 'v${NODE_VERSION}'
+      - pnpm install --frozen-lockfile
+      - pnpm build
+      - pnpm test

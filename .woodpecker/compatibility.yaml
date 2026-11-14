@@ -1,0 +1,43 @@
+when:
+  - event: [push, pull_request]
+
+matrix:
+  include:
+    - NEXT: '14.0.0'
+      REACT: '18.2.0'
+      REACT_TYPES: '18'
+    - NEXT: '^14'
+      REACT: '^18.2.0'
+      REACT_TYPES: '18'
+    - NEXT: '15.0.0'
+      REACT: '18.2.0'
+      REACT_TYPES: '18'
+    - NEXT: '^15'
+      REACT: '^19.0.0'
+      REACT_TYPES: '19'
+    - NEXT: '16.0.0'
+      REACT: '19.0.0'
+      REACT_TYPES: '19'
+    - NEXT: '^16'
+      REACT: '^19.2.0'
+      REACT_TYPES: '19'
+
+steps:
+  - name: runtime-compatibility
+    image: node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496
+    environment:
+      CI: 'true'
+      NEXT_APP_DIRECTORY: next-app-runtime
+    commands:
+      - npm install --global pnpm@12.5.1
+      - pnpm install --frozen-lockfile
+      - pnpm build && pnpm compat:prepare
+      - >-
+        pnpm --dir next-app-runtime --ignore-workspace add --ignore-scripts
+        "next@${NEXT}" "react@${REACT}" "react-dom@${REACT}"
+        "@types/react@^${REACT_TYPES}" "@types/react-dom@^${REACT_TYPES}"
+        ./next-navigation-utils.tgz
+      - pnpm --dir next-app-runtime --ignore-workspace exec tsc -p tsconfig.types.json
+      - node next-app-runtime/commonjs.cjs
+      - pnpm playwright install --with-deps
+      - pnpm unit

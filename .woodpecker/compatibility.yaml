@@ -30,7 +30,7 @@ steps:
       NEXT_APP_DIRECTORY: next-app-runtime
     commands:
       - npm install --global --prefix /tmp/ci-node node@24.22.3 pnpm@12.5.1
-      - export PATH=/tmp/ci-node/bin:\$PATH
+      - export PATH=/tmp/ci-node/bin:$PATH
       - pnpm install --frozen-lockfile
       - pnpm build && pnpm compat:prepare
       - >-

@@ -17,7 +17,8 @@ steps:
       CI: 'true'
       NODE_VERSION: ${NODE}
     commands:
-      - npm install --global node@${NODE_VERSION} pnpm@12.5.1
+      - npm install --global --prefix /tmp/ci-node node@${NODE_VERSION} pnpm@12.5.1
+      - export PATH=/tmp/ci-node/bin:\$PATH
       - test "$$(node --version)" = 'v${NODE_VERSION}'
       - pnpm install --frozen-lockfile
       - pnpm build
